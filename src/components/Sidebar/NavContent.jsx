@@ -91,7 +91,7 @@ function NavContent() {
                 </Typography>
               </Link>
 
-              <Link
+              {/* <Link
                 component={NavLink}
                 id="auction-nav"
                 to="/auction"
@@ -104,7 +104,7 @@ function NavContent() {
                   <SvgIcon color="primary" component={AuctionIcon} style={{ fill: "none" }} viewBox="0 0 25 24" />
                   Auction
                 </Typography>
-              </Link>
+              </Link> */}
 
               <Link
                 component={NavLink}
@@ -121,7 +121,7 @@ function NavContent() {
                 </Typography>
               </Link>
 
-              <Link
+              {/* <Link
                 component={NavLink}
                 id="lock-nav"
                 to="/lock"
@@ -134,7 +134,7 @@ function NavContent() {
                   <SvgIcon color="primary" component={LockIcon} style={{ fill: "none" }} viewBox="0 0 25 24" />
                   Lock
                 </Typography>
-              </Link>
+              </Link> */}
 
               {/*<Link*/}
               {/*  component={NavLink}*/}

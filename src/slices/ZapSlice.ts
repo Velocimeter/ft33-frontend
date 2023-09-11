@@ -89,7 +89,7 @@ export const getZapTokenBalances = createAsyncThunk(
         return result;
       } catch (e: unknown) {
         console.error(e);
-        dispatch(error("An error has occurred when fetching token balances."));
+        // dispatch(error("An error has occurred when fetching token balances."));
         throw e;
       }
     }

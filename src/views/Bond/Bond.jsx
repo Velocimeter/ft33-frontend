@@ -6,7 +6,7 @@ import TabPanel from "../../components/TabPanel";
 import BondHeader from "./BondHeader";
 import BondRedeem from "./BondRedeem";
 import BondPurchase from "./BondPurchase";
-import BondZap from "./BondZap";
+// import BondZap from "./BondZap";
 import "./bond.scss";
 import { useWeb3Context } from "src/hooks/web3Context";
 import { Skeleton } from "@material-ui/lab";
@@ -91,7 +91,7 @@ function Bond({ bond }) {
               >
                 <Tab label="Bond" {...a11yProps(0)} />
                 <Tab label="Redeem" {...a11yProps(1)} />
-                {bond.type === 1 && <Tab label="Zap" {...a11yProps(2)} />}
+                {/* {bond.type === 1 && <Tab label="Zap" {...a11yProps(2)} />} */}
               </Tabs>
 
               <TabPanel value={view} index={0}>
@@ -102,9 +102,9 @@ function Bond({ bond }) {
                 <BondRedeem bond={bond} />
               </TabPanel>
 
-              <TabPanel value={view} index={2}>
+              {/* <TabPanel value={view} index={2}>
                 <BondZap bond={bond} />
-              </TabPanel>
+              </TabPanel> */}
             </Paper>
           </Fade>
         </Backdrop>
