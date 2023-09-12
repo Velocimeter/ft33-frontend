@@ -30,7 +30,7 @@ import { girth as gTheme } from "./themes/girth.js";
 
 import "./style.scss";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Auction from "./views/Auction/Auction";
+// import Auction from "./views/Auction/Auction";
 import { loadDetails as loadVeDetails } from "./slices/VotingEscrowSlice";
 import Lock from "./views/Lock/Lock";
 

@@ -5,7 +5,7 @@ import { ReactComponent as ChevronDown } from "../../assets/icons/chevron-down.s
 import { ReactComponent as ArrowUpIcon } from "../../assets/icons/arrow-up.svg";
 
 import "./ohmmenu.scss";
-import { dai, frax, weth } from "src/helpers/AllBonds";
+import { dai, weth } from "src/helpers/AllBonds";
 import { useWeb3Context } from "../../hooks/web3Context";
 
 import SquidImg from "src/assets/icons/ft33.png";
@@ -54,7 +54,7 @@ function OhmMenu() {
   const SSQUID_ADDRESS = addresses[networkID].SSQUID_ADDRESS;
   const SQUID_ADDRESS = addresses[networkID].SQUID_ADDRESS;
   const WSSQUID_ADDRESS = addresses[networkID].WSSQUID_ADDRESS;
-  const PT_TOKEN_ADDRESS = addresses[networkID].PT_TOKEN_ADDRESS;
+  // const PT_TOKEN_ADDRESS = addresses[networkID].PT_TOKEN_ADDRESS;
 
   const handleClick = target => {
     setAnchorEl(target);
@@ -63,7 +63,7 @@ function OhmMenu() {
   const open = Boolean(anchorEl);
   const id = "ohm-popper";
   const daiAddress = dai.getAddressForReserve(networkID);
-  const fraxAddress = frax.getAddressForReserve(networkID);
+  // const fraxAddress = frax.getAddressForReserve(networkID);
   const wethAddress = weth.getAddressForReserve(networkID);
   return (
     <Box

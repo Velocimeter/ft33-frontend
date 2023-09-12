@@ -27,14 +27,14 @@ import { abi as EthBondContract } from "src/abi/bonds/EthContract.json";
 export const dai = new StableBond({
   active: false, // unused
   name: "dai",
-  displayName: "DAI",
-  bondToken: "DAI",
+  displayName: "USDC",
+  bondToken: "USDC",
   bondIconSvg: DaiImg,
   bondContractABI: DaiBondContract,
   networkAddrs: {
     [NetworkID.Mainnet]: {
-      bondAddress: "0x575409F8d77c12B05feD8B455815f0e54797381c",
-      reserveAddress: "0x6b175474e89094c44da98b954eedeac495271d0f",
+      bondAddress: "0x81Dcb847fc51487ba39D228425344ecB53ebfB6E",
+      reserveAddress: "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913",
     },
     [NetworkID.Testnet]: {
       bondAddress: "0xDea5668E815dAF058e3ecB30F645b04ad26374Cf",
@@ -52,8 +52,8 @@ export const weth = new StableBond({
   bondContractABI: WethBondContract,
   networkAddrs: {
     [NetworkID.Mainnet]: {
-      bondAddress: "0x8f9b609eA2179262A7A672553D6F78ec83215EE9",
-      reserveAddress: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+      bondAddress: "0x29d3646Af367dBa96E1b09A196c60FA20A3dAfF4",
+      reserveAddress: "0x4200000000000000000000000000000000000006",
     },
     [NetworkID.Testnet]: {
       bondAddress: "0xDea5668E815dAF058e3ecB30F645b04ad26374Cf",
@@ -71,8 +71,8 @@ export const wethV2 = new StableBond({
   bondContractABI: WethBondContract,
   networkAddrs: {
     [NetworkID.Mainnet]: {
-      bondAddress: "0xd9cf92F1e3758EdE8bb47e37CAc7927dFbd54c12",
-      reserveAddress: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+      bondAddress: "0x29d3646Af367dBa96E1b09A196c60FA20A3dAfF4",
+      reserveAddress: "0x4200000000000000000000000000000000000006",
     },
     [NetworkID.Testnet]: {
       bondAddress: "0xDea5668E815dAF058e3ecB30F645b04ad26374Cf",
@@ -157,8 +157,8 @@ export const squid_weth = new LPBond({
   reserveContract: ReserveOhmDaiContract,
   networkAddrs: {
     [NetworkID.Mainnet]: {
-      bondAddress: "0x5ab2493d75cbccd0762417839c83ab6b567d2f71",
-      reserveAddress: "0xfad704847967d9067df7a60910399155fca43fe8",
+      bondAddress: "0x29d3646Af367dBa96E1b09A196c60FA20A3dAfF4",
+      reserveAddress: "0x4200000000000000000000000000000000000006",
     },
     [NetworkID.Testnet]: {
       bondAddress: "0xBfeB1d574ffA150715e5B24aDa194109472F74f0",
