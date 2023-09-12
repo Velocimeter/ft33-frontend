@@ -8,9 +8,9 @@ import "./ohmmenu.scss";
 import { dai, frax, weth } from "src/helpers/AllBonds";
 import { useWeb3Context } from "../../hooks/web3Context";
 
-import SquidImg from "src/assets/tokens/token_SQUID.png";
-import SSquidImg from "src/assets/tokens/token_sSQUID.png";
-import WSSquidImg from "src/assets/tokens/token_wsSQUID.png";
+import SquidImg from "src/assets/icons/ft33.png";
+import SSquidImg from "src/assets/icons/ft33.png";
+import WSSquidImg from "src/assets/icons/ft33.png";
 
 const addTokenToWallet = (tokenSymbol, tokenAddress) => async () => {
   if (window.ethereum) {
