@@ -9,6 +9,7 @@ import { ReactComponent as DashboardIcon } from "../../assets/icons/dashboard.sv
 import { ReactComponent as SquidIcon } from "../../assets/icons/squid.svg";
 import { ReactComponent as TreasuryIcon } from "../../assets/icons/treasury.svg";
 import { ReactComponent as LockIcon } from "../../assets/icons/lock.svg";
+import ft33 from "../../assets/icons/ft33.png";
 import { trim, shorten } from "../../helpers";
 import { useAddress, useWeb3Context } from "src/hooks/web3Context";
 import useBonds from "../../hooks/Bonds";
@@ -54,12 +55,7 @@ function NavContent() {
         <div className="dapp-menu-top">
           <Box className="branding-header">
             <Link href="https://squid.xyz/" target="_blank">
-              <SvgIcon
-                color="primary"
-                component={SquidIcon}
-                viewBox="0 0 81 80"
-                style={{ minWdth: "81px", minHeight: "80px", width: "81px" }}
-              />
+              <img src={ft33} alt="ft33" style={{ minWdth: "81px", minHeight: "80px", width: "81px" }} />
             </Link>
 
             {address && (

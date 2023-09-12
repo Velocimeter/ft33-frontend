@@ -1,13 +1,11 @@
 import React from "react";
 import styled from "styled-components";
-import splash from "../../assets/splash.png";
+import splash from "../../assets/splash.jpeg";
 import splashLogo from "../../assets/splashLogo.svg";
 
 const Splash: React.FC = () => {
   return (
-    <Wrapper>
-      <Logo src={splashLogo} />
-    </Wrapper>
+    <Wrapper />
   );
 };
 
