@@ -185,7 +185,7 @@ const BidRecord: React.FC<{ bid: BidData; auctionId: number }> = ({ bid, auction
   const { chainID } = useWeb3Context();
 
   const openExplorer = (txHash: string) => {
-    const url = chainID === 4 ? "https://rinkeby.etherscan.io/tx/" + txHash : "https://etherscan.io/tx/" + txHash;
+    const url = "https://basescan.io/tx/" + txHash;
     window.open(url);
   };
   const ens = useReverseENSLookUp(bid.bidder);

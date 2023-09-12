@@ -9,11 +9,13 @@ export const TOKEN_DECIMALS = 9;
 export const POOL_GRAPH_URLS = {
   4: "https://api.thegraph.com/subgraphs/name/pooltogether/rinkeby-v3_4_3",
   1: "https://api.thegraph.com/subgraphs/name/pooltogether/pooltogether-v3_4_3",
+  8453: "",
 };
 
 export const SQUID_NFT_GRAPH_URLS: { [key: string]: string } = {
   4: "https://api.thegraph.com/subgraphs/name/squiddaodev/squid-dao-nft-rinkeby",
   1: "https://api.thegraph.com/subgraphs/name/squiddaodev/squid-dao-nft",
+  8453: "",
 };
 
 interface IAddresses {
