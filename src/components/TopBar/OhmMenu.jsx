@@ -81,7 +81,7 @@ function OhmMenu() {
         title="SQUID"
         aria-describedby={id}
       >
-        <Typography>SQUID</Typography>
+        <Typography>FTW</Typography>
         <SvgIcon component={ChevronDown} color="primary" style={{ fill: "none" }} />
       </Button>
 
@@ -91,14 +91,10 @@ function OhmMenu() {
             <Fade {...TransitionProps} timeout={100}>
               <Paper className="ohm-menu" elevation={1}>
                 <Box component="div" className="buy-tokens">
-                  <Link
-                    href={`https://cowswap.exchange/#/swap?referral=0x42e61987a5cba002880b3cc5c800952a5804a1c5&inputCurrency=${wethAddress}&outputCurrency=${SQUID_ADDRESS}`}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
+                  <Link href={"https://base.velocimeter.xyz/swap"} target="_blank" rel="noreferrer">
                     <Button size="large" variant="contained" color="secondary" fullWidth>
                       <Typography align="left">
-                        Buy on Cowswap <SvgIcon component={ArrowUpIcon} htmlColor="#A3A3A3" />
+                        Buy on Velocimeter <SvgIcon component={ArrowUpIcon} htmlColor="#A3A3A3" />
                       </Typography>
                     </Button>
                   </Link>
@@ -147,7 +143,7 @@ function OhmMenu() {
                         onClick={addTokenToWallet("SQUID", SQUID_ADDRESS)}
                       >
                         <img src={SquidImg} style={{ height: "35px", width: "35px" }} />
-                        <Typography variant="body1">SQUID</Typography>
+                        <Typography variant="body1">FTW</Typography>
                       </Button>
                       <Button
                         variant="contained"
@@ -156,7 +152,7 @@ function OhmMenu() {
                         onClick={addTokenToWallet("sSQUID", SSQUID_ADDRESS)}
                       >
                         <img src={SSquidImg} style={{ height: "35px", width: "35px" }} />
-                        <Typography variant="body1">sSQUID</Typography>
+                        <Typography variant="body1">sFTW</Typography>
                       </Button>
                       <Button
                         variant="contained"
@@ -165,7 +161,7 @@ function OhmMenu() {
                         onClick={addTokenToWallet("wsSQUID", WSSQUID_ADDRESS)}
                       >
                         <img src={WSSquidImg} style={{ height: "35px", width: "35px" }} />
-                        <Typography variant="body1">wsSQUID</Typography>
+                        <Typography variant="body1">wsFTW</Typography>
                       </Button>
                       {/*<Button variant="contained" color="secondary" onClick={addTokenToWallet("33T", PT_TOKEN_ADDRESS)}>*/}
                       {/*  <SvgIcon*/}
