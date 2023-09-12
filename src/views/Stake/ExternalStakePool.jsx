@@ -21,7 +21,7 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import BondLogo from "../../components/BondLogo";
 import { ReactComponent as SquidUsdt } from "src/assets/tokens/squid-usdt.svg";
 import { ReactComponent as ArrowUp } from "../../assets/icons/fullscreen.svg";
-import { getLusdData } from "../../slices/LusdSlice";
+// import { getLusdData } from "../../slices/LusdSlice";
 import { useWeb3Context } from "src/hooks/web3Context";
 import { trim } from "../../helpers";
 
@@ -41,9 +41,9 @@ export default function ExternalStakePool() {
     return state.account && state.account.bonds?.ohm_lusd_lp?.balance;
   });
 
-  const loadLusdData = async () => {
-    await dispatch(getLusdData({ address: address, provider: provider, networkID: chainID }));
-  };
+  // const loadLusdData = async () => {
+  //   await dispatch(getLusdData({ address: address, provider: provider, networkID: chainID }));
+  // };
 
   useEffect(() => {
     if (hasCachedProvider()) {
@@ -58,12 +58,12 @@ export default function ExternalStakePool() {
   }, []);
 
   // this useEffect fires on state change from above. It will ALWAYS fire AFTER
-  useEffect(() => {
-    // don't load ANY details until wallet is Checked
-    if (walletChecked) {
-      loadLusdData();
-    }
-  }, [walletChecked]);
+  // useEffect(() => {
+  //   // don't load ANY details until wallet is Checked
+  //   if (walletChecked) {
+  //     loadLusdData();
+  //   }
+  // }, [walletChecked]);
 
   return (
     <Paper className={`ohm-card secondary ${isSmallScreen && "mobile"}`}>

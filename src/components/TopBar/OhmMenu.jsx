@@ -5,7 +5,7 @@ import { ReactComponent as ChevronDown } from "../../assets/icons/chevron-down.s
 import { ReactComponent as ArrowUpIcon } from "../../assets/icons/arrow-up.svg";
 
 import "./ohmmenu.scss";
-import { dai, frax, weth } from "src/helpers/AllBonds";
+// import { dai, frax, weth } from "src/helpers/AllBonds";
 import { useWeb3Context } from "../../hooks/web3Context";
 
 import SquidImg from "src/assets/icons/ft33.png";
@@ -62,9 +62,9 @@ function OhmMenu() {
 
   const open = Boolean(anchorEl);
   const id = "ohm-popper";
-  const daiAddress = dai.getAddressForReserve(networkID);
-  const fraxAddress = frax.getAddressForReserve(networkID);
-  const wethAddress = weth.getAddressForReserve(networkID);
+  // const daiAddress = dai.getAddressForReserve(networkID);
+  // const fraxAddress = frax.getAddressForReserve(networkID);
+  // const wethAddress = weth.getAddressForReserve(networkID);
   return (
     <Box
       component="div"

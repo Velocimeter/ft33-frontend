@@ -9,20 +9,102 @@ import { SvgIcon } from "@material-ui/core";
 import { ReactComponent as OhmImg } from "../assets/tokens/token_OHM.svg";
 import { ReactComponent as SOhmImg } from "../assets/tokens/token_sOHM.svg";
 
-import { squid_weth } from "./AllBonds";
+interface DexScrennerPair {
+  chainId: string;
+  dexId: string;
+  url: string;
+  pairAddress: `0x${string}`;
+  baseToken: {
+    address: `0x${string}`;
+    name: string;
+    symbol: string;
+  };
+  quoteToken: {
+    address: `0x${string}`;
+    name: string;
+    symbol: string;
+  };
+  priceNative: string;
+  priceUsd?: string;
+  txns: {
+    m5: {
+      buys: number;
+      sells: number;
+    };
+    h1: {
+      buys: number;
+      sells: number;
+    };
+    h6: {
+      buys: number;
+      sells: number;
+    };
+    h24: {
+      buys: number;
+      sells: number;
+    };
+  };
+  volume: {
+    m5: number;
+    h1: number;
+    h6: number;
+    h24: number;
+  };
+  priceChange: {
+    m5: number;
+    h1: number;
+    h6: number;
+    h24: number;
+  };
+  liquidity?: {
+    usd?: number;
+    base: number;
+    quote: number;
+  };
+  fdv?: number;
+  pairCreatedAt?: number;
+}
+
+// import { squid_weth } from "./AllBonds";
 import { JsonRpcSigner, StaticJsonRpcProvider } from "@ethersproject/providers";
 import { IBaseAsyncThunk } from "src/slices/interfaces";
 
 // NOTE (appleseed): this looks like an outdated method... we now have this data in the graph (used elsewhere in the app)
 export async function getMarketPrice({ networkID, provider }: IBaseAsyncThunk) {
-  const ohm_dai_address = squid_weth.getAddressForReserve(networkID);
-  const pairContract = new ethers.Contract(ohm_dai_address, PairContract, provider);
-  const reserves = await pairContract.getReserves();
-  // TODO: Might need to change this accroding to SQUID address.
-  const marketPrice = reserves[1] / reserves[0];
+  // const ohm_dai_address = squid_weth.getAddressForReserve(networkID);
+  // const pairContract = new ethers.Contract(ohm_dai_address, PairContract, provider);
+  // const reserves = await pairContract.getReserves();
+  // // TODO: Might need to change this accroding to SQUID address.
+  // const marketPrice = reserves[1] / reserves[0];
+
+  const ftwAddress = addresses[networkID].SQUID_ADDRESS;
+
+  const marketPrice = await getDexScreenerPrice(ftwAddress, "FTW");
 
   // commit('set', { marketPrice: marketPrice / Math.pow(10, 9) });
   return marketPrice;
+}
+
+async function getDexScreenerPrice(tokenAddy: string, tokenSymbol: string) {
+  const res = await fetch(`
+  https://api.dexscreener.com/latest/dex/tokens/${tokenAddy.toLowerCase()}
+    `);
+  const json = await res.json();
+  const pairs = json.pairs as DexScrennerPair[];
+
+  if (pairs?.length === 0 || !pairs) {
+    return 0;
+  }
+
+  const sortedPairs = pairs.sort((a, b) => b.txns.h24.buys + b.txns.h24.sells - (a.txns.h24.buys + a.txns.h24.sells));
+
+  const price = sortedPairs.filter(
+    pair => pair.baseToken.symbol === tokenSymbol && pair.baseToken.address.toLowerCase() === tokenAddy.toLowerCase(),
+  )[0]?.priceUsd;
+
+  if (!price) return 0;
+
+  return parseFloat(price);
 }
 
 export async function getTokenPrice(tokenId = "olympus") {

@@ -8,7 +8,8 @@ import BuySquid from "./BuySquid";
 import Liquidity from "./Liquidity";
 import Splash from "./Splash";
 import Stats from "./Stats";
-import { allBondsMap, squid_weth } from "../../helpers/AllBonds";
+// import { allBondsMap, squid_weth } from "../../helpers/AllBonds";
+import { allBondsMap } from "../../helpers/AllBonds";
 import apollo from "../../lib/apolloClient";
 import { treasuryDataQuery } from "../TreasuryDashboard/treasuryData.js";
 import { Modal, ModalProvider } from "./Modal";
@@ -58,12 +59,12 @@ const Auction: React.FC = () => {
     return 0;
   });
 
-  const treasuryLPBalance = useSelector((state: IStateView) => {
-    if (state.bonding.loading === false && state.bonding[squid_weth.name]) {
-      return state.bonding[squid_weth.name].purchased;
-    }
-    return 0;
-  });
+  // const treasuryLPBalance = useSelector((state: IStateView) => {
+  //   if (state.bonding.loading === false && state.bonding[squid_weth.name]) {
+  //     return state.bonding[squid_weth.name].purchased;
+  //   }
+  //   return 0;
+  // });
 
   const stakingAPY = useSelector((state: IStateView) => {
     return state.app.stakingAPY;
@@ -152,7 +153,8 @@ const Auction: React.FC = () => {
               </List>
             </div>
           </div>
-          <Liquidity treasuryLPBalance={treasuryLPBalance} ratio={ratio} />
+          {/* <Liquidity treasuryLPBalance={treasuryLPBalance} ratio={ratio} /> */}
+          <Liquidity treasuryLPBalance={0} ratio={ratio} />
         </Section>
       </Wrapper>
     </ModalProvider>
