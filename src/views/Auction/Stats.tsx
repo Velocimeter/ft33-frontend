@@ -33,7 +33,7 @@ const Stat: React.FC<StatProps> = ({ title, value }) => {
 const Value = styled.div`
   font-size: 2rem;
   line-height: 3rem;
-  color: #7f7fd5;
+  color: #00bafa;
   margin-bottom: 0.5rem;
   white-space: nowrap;
 `;

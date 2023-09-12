@@ -208,12 +208,12 @@ export const light = responsiveFontSizes(
         MuiButton: {
           containedPrimary: {
             color: "#ffffff",
-            borderColor: "#7F7FD5",
-            backgroundColor: "#7F7FD5",
+            borderColor: "#00bafa",
+            backgroundColor: "#00bafa",
             "&:hover": {
               color: "#ffffff",
-              borderColor: "#7F7FD5",
-              backgroundColor: "#7F7FD5",
+              borderColor: "#00bafa",
+              backgroundColor: "#00bafa",
             },
           },
           containedSecondary: {
@@ -253,12 +253,12 @@ export const light = responsiveFontSizes(
           },
           outlinedSecondary: {
             color: "#ffffff",
-            borderColor: "#7F7FD5",
-            backgroundColor: "#7F7FD5",
+            borderColor: "#00bafa",
+            backgroundColor: "#00bafa",
             "&:hover": {
               color: "#ffffff",
-              borderColor: "#7F7FD5",
-              backgroundColor: "#7F7FD5",
+              borderColor: "#00bafa",
+              backgroundColor: "#00bafa",
             },
           },
           textPrimary: {

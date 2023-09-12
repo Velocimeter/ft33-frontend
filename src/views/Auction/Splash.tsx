@@ -4,9 +4,7 @@ import splash from "../../assets/splash.jpeg";
 import splashLogo from "../../assets/splashLogo.svg";
 
 const Splash: React.FC = () => {
-  return (
-    <Wrapper />
-  );
+  return <Wrapper />;
 };
 
 const Wrapper = styled.div`

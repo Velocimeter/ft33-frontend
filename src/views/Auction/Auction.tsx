@@ -235,7 +235,7 @@ const ListNumber = styled.div`
   height: 3.5rem;
   border-radius: 10px;
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
-  color: #7f7fd5;
+  color: #00bafa;
   font-size: 1.5rem;
   font-weight: 700;
   margin-right: 1.5rem;
@@ -289,7 +289,7 @@ const InfoDivider = styled.div`
   width: 2.5rem;
   height: 0.25rem;
   margin: 1.5rem 0;
-  background-color: #7f7fd5;
+  background-color: #00bafa;
   border-radius: 8px;
 `;
 

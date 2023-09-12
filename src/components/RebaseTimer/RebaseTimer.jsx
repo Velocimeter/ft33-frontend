@@ -68,7 +68,7 @@ function RebaseTimer() {
         secondsToRebase > 0 ? (
           <>
             <Typography variant="subtitle1">
-              <span style={{ color: "#7F7FD5" }}>{rebaseString}</span> to next rebase
+              <span style={{ color: "#00bafa" }}>{rebaseString}</span> to next rebase
             </Typography>
           </>
         ) : (

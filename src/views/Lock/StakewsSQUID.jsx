@@ -354,7 +354,7 @@ function Lock() {
                   {!isLoading && hasLocked && (
                     <div>
                       Unlock available on{" "}
-                      <span style={{ color: "#7F7FD5" }}>
+                      <span style={{ color: "#00bafa" }}>
                         {format(new Date(Number(unlockTime) * 1000), "MMM dd, yyyy")}
                       </span>
                     </div>
@@ -409,7 +409,7 @@ const DateButton = styled.button`
 
   &:hover,
   &.active {
-    border: 2px solid #7f7fd5;
+    border: 2px solid #00bafa;
   }
 `;
 
@@ -417,7 +417,7 @@ const Placeholder = styled.span`
   position: absolute;
   right: 1.5rem;
   font-weight: bold;
-  color: #7f7fd5;
+  color: #00bafa;
   z-index: 3;
   font-size: 0.875rem;
   cursor: pointer;

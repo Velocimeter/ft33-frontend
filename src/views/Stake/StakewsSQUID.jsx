@@ -124,7 +124,7 @@ function Stake() {
                   onClick={() => setStakeYear(info.duration)}
                 >
                   <div style={{ fontSize: "16px", fontWeight: "600", color: "#200A2B" }}>Lock sSQUID for</div>
-                  <div style={{ fontSize: "24px", fontWeight: "600", color: "#7F7FD5", margin: "10px 0" }}>
+                  <div style={{ fontSize: "24px", fontWeight: "600", color: "#00bafa", margin: "10px 0" }}>
                     <span style={{ fontSize: "32px" }}>{info.duration}</span> Year
                   </div>
                   {/*<div className="apy-title">Apy</div>*/}
@@ -251,7 +251,7 @@ function Stake() {
                 {!isLoading && hasLocked && (
                   <div>
                     Unlock available in{" "}
-                    <span style={{ color: "#7F7FD5" }}>
+                    <span style={{ color: "#00bafa" }}>
                       {format(new Date(Number(unlockTime) * 1000), "MMM dd, yyyy")}
                     </span>
                   </div>
@@ -293,7 +293,7 @@ const MaxButton = styled.span`
   top: 30%;
   right: 16px;
   font-weight: 600;
-  color: #7f7fd5;
+  color: #00bafa;
   z-index: 3;
   font-size: 1rem;
 `;

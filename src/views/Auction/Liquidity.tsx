@@ -70,7 +70,7 @@ const StatsTitle = styled.div`
 const StatsValue = styled.div`
   line-height: 3rem;
   font-size: 2rem;
-  color: #7f7fd5;
+  color: #00bafa;
   font-weight: 600;
   white-space: nowrap;
 `;

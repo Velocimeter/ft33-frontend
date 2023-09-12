@@ -238,7 +238,7 @@ const Button = styled(MuiButton)`
   height: 3rem;
   color: white;
   border: transparent;
-  background-color: #7f7fd5;
+  background-color: #00bafa;
   padding: 0.625rem 1.25rem;
   border-radius: 40px;
   font-weight: bold;

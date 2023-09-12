@@ -392,7 +392,7 @@ const MaxButton = styled.span`
   top: 30%;
   right: 16px;
   font-weight: 600;
-  color: #7f7fd5;
+  color: #00bafa;
   z-index: 3;
   font-size: 1rem;
 `;
