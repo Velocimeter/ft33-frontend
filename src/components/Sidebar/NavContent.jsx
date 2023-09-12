@@ -54,7 +54,7 @@ function NavContent() {
       <Box className="dapp-sidebar-inner" display="flex" justifyContent="center" flexDirection="column">
         <div className="dapp-menu-top">
           <Box className="branding-header">
-            <Link href="https://squid.xyz/" target="_blank">
+            <Link href="/">
               <img src={ft33} alt="ft33" style={{ minWdth: "81px", minHeight: "80px", width: "81px" }} />
             </Link>
 

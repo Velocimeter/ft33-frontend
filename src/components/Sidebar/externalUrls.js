@@ -6,18 +6,13 @@ import { SvgIcon } from "@material-ui/core";
 
 const externalUrls = [
   {
-    title: "Discourse",
-    url: "https://discourse.squid.xyz/",
-    icon: <SvgIcon color="primary" component={ForumIcon} style={{ fill: "none" }} />,
-  },
-  {
     title: "Docs",
-    url: "https://squid-dao.gitbook.io/squiddao/",
+    url: "/",
     icon: <SvgIcon color="primary" component={DocsIcon} style={{ fill: "none" }} />,
   },
   {
     title: "Governance",
-    url: "https://vote.squid.xyz",
+    url: "https://snapshot.org/#/friendtech33.eth",
     icon: <SvgIcon color="primary" component={GovIcon} style={{ fill: "none" }} />,
   },
 ];

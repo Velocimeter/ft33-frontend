@@ -10,7 +10,9 @@ export const useReverseENSLookUp = (address: string) => {
     if (address && provider) {
       provider.lookupAddress(address).then(name => {
         if (mounted) {
-          setEns(name);
+          if (name) {
+            setEns(name);
+          }
         }
       });
     }
