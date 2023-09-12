@@ -78,8 +78,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function App() {
-  useGoogleAnalytics();
-  useSegmentAnalytics();
+  // useGoogleAnalytics();
+  // useSegmentAnalytics();
   const dispatch = useDispatch();
   const [theme] = useTheme();
   const location = useLocation();
@@ -132,7 +132,7 @@ function App() {
       bonds.map(bond => {
         dispatch(calculateUserBondDetails({ address, bond, provider, networkID: chainID }));
       });
-      dispatch(getZapTokenBalances({ address, networkID: chainID, provider: loadProvider }));
+      // dispatch(getZapTokenBalances({ address, networkID: chainID, provider: loadProvider }));
       dispatch(loadVeDetails({ address, networkID: chainID, provider }));
     },
     [connected],
