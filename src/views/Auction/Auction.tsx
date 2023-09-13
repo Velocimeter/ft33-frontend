@@ -19,7 +19,7 @@ import nft02 from "../../assets/images/brent.png";
 import nft03 from "../../assets/images/ice.png";
 import nft04 from "../../assets/images/herro.png";
 import ethereumIcon from "../../assets/icons/ethereum.svg";
-import squidIcon from "../../assets/icons/logo.svg";
+import squidIcon from "../../assets/icons/ft33.png";
 import coinIcon from "../../assets/icons/coin.svg";
 
 interface IStateView {
