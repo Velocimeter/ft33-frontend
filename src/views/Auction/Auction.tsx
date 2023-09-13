@@ -108,13 +108,15 @@ const Auction: React.FC = () => {
         <Splash />
         {auctionId !== undefined && !paused && <Bid auctionId={auctionId} />}
         <Section>
-          <SectionTitle>What is the SQUID DAO?</SectionTitle>
+          <SectionTitle>What is the FT33 DAO?</SectionTitle>
           <Text1 className="text-center">
-            On October 20, 2021, an anonymous group of DeFi veterans came together to launch Squid DAO. These anons
-            believed they could leverage the economic successes popularized by the Olympus and the fundraising
-            mechanisms introduced by Nouns DAOs to create an economic flywheel backed by ETH.
+            Friend Tech has captured the imagination of crypto twitter & further afield with its unique PWA approach sidestepping the app stores, it's infamous bonding curve, and promise of a mega airdrop.
+            Wrapped keys arrived soon after with some of the biggest FT acccounts adopting the mintable/burnable fractionalised ERC20 form.
+            As TVL soars & attention continues to be steadily focussed on FT a burgeoning DeFi ecosystem will require deep ERC20 liquidity for wrapped keys.
+            Many communities have formed to share FT alpha and aggregate/mirror their favorite creators rooms. Many are also sharing the airdrop with their keyholders and the 33 dynamics based on points analysis.
+            The idea of FT 33 is to combine these metas into a DAO format backing a deeply liquid reserve currency with Friend Tech assets including keys, wrapped keys, ecosystem related project tokens & finally the airdropped token itself.
             <br />
-            Thus, the SQUID was born.
+            Thus, the FT33 was born.
           </Text1>
           {/*<BuySquid />*/}
           <Stats treasuryBalance={treasuryBalance} stakingAPY={stakingAPY} tvl={tvl} />
