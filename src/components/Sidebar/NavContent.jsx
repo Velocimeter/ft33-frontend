@@ -31,7 +31,7 @@ function NavContent() {
     if (currentPath.indexOf("dashboard") >= 0 && page === "dashboard") {
       return true;
     }
-    if (currentPath.indexOf("auction") >= 0 && page === "auction") {
+    if (currentPath.indexOf("about") >= 0 && page === "about") {
       return true;
     }
     if (currentPath.indexOf("stake") >= 0 && page === "stake") {
@@ -74,7 +74,7 @@ function NavContent() {
             <div className="dapp-nav" id="navbarNav">
               <Link
                 component={NavLink}
-                id="auction-nav"
+                id="about-nav"
                 to="/about"
                 isActive={(match, location) => {
                   return checkPage(match, location, "about");
