@@ -80,7 +80,7 @@ function ChooseBond() {
             <Paper className="ohm-card">
               <Box textAlign={`${isVerySmallScreen ? "center" : "center"}`}>
                 <Typography variant="subtitle1" color="textSecondary">
-                  SQUID Price
+                  FTW Price
                 </Typography>
                 <Typography variant="h4">
                   {isAppLoading ? <Skeleton width="100px" /> : formatEth(marketPrice, 2)}

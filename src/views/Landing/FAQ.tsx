@@ -11,26 +11,26 @@ const P = styled.div`
 
 const QAs = [
   {
-    q: "What is SQUID DAO?",
+    q: "What is FTW DAO?",
     a: (
       <>
         <P>
-          SQUID DAO is a decentralized reserve currency protocol based on the SQUID token. SQUID protocol was inspired
+          FTW DAO is a decentralized reserve currency protocol based on the FTW token. FTW protocol was inspired
           by OlympusDAO.
         </P>
         <P>
-          Each SQUID is backed by a basket of assets (e.g. ETH) in the SQUID treasury, giving the token an intrinsic
+          Each FTW is backed by a basket of assets (e.g. ETH) in the FTW treasury, giving the token an intrinsic
           value that it should not fall below.
         </P>
-        <P>SQUID DAO will leverage similar staking and bonding dynamics of OlympusDAO.</P>
+        <P>FTW DAO will leverage similar staking and bonding dynamics of OlympusDAO.</P>
       </>
     ),
   },
   {
-    q: "What is SQUID DAO's mission?",
+    q: "What is FTW DAO's mission?",
     a: (
       <>
-        <P>SQUID DAO has two main missions.</P>
+        <P>FTW DAO has two main missions.</P>
         <ul>
           <li>
             <P>
@@ -42,7 +42,7 @@ const QAs = [
           <li>
             <P>
               Secondly, it aims to attempt to influence the mindsets of people's connection to pricing everything in
-              USDs. Instead, we hope that through SQUID DAO people might start to value things in terms of ETH.
+              USDs. Instead, we hope that through FTW DAO people might start to value things in terms of ETH.
             </P>
           </li>
         </ul>
@@ -56,7 +56,7 @@ const QAs = [
         This NFT auction is designed as a bootstrapping system that anyone can participate in. All protocols need
         initial capital for liquidity pools. The choice is usually to either take on board investors or to seek
         investment from the ecosystem in a crowdfunding manner; but we have elected to sell NFTs to raise the funds for
-        our initial LPs. SQUID NFTs will be infused with SQUID tokens.
+        our initial LPs. FTW NFTs will be infused with FTW tokens.
       </P>
     ),
   },
@@ -66,7 +66,7 @@ const QAs = [
       <P>
         Winners of an auction get the NFT art work, and voting right on the protocol. There is no more bootstrapping
         incentive to bid and win. For more info check
-        <Link href="https://squid-dao.gitbook.io/squiddao/nft-auctions/nft-bootstrap-auctions"> here</Link>.
+        <Link href="https://FTW-dao.gitbook.io/FTWdao/nft-auctions/nft-bootstrap-auctions"> here</Link>.
       </P>
     ),
   },
@@ -91,72 +91,72 @@ const QAs = [
     ),
   },
   {
-    q: "What is the SQUID token?",
+    q: "What is the FTW token?",
     a: (
       <P>
-        SQUID is a token that is designed to grow in values versus the value of ETH. So, as ETH grows in value, SQUID
-        should grow in value faster. Every SQUID is backed by at least 1 ETH. However, through the accumulation of
-        income-generating assets in the SQUID treasury, SQUID can reach valuations well beyond that of ETH
+        FTW is a token that is designed to grow in values versus the value of ETH. So, as ETH grows in value, FTW
+        should grow in value faster. Every FTW is backed by at least 1 ETH. However, through the accumulation of
+        income-generating assets in the FTW treasury, FTW can reach valuations well beyond that of ETH
       </P>
     ),
   },
   {
-    q: "What is a SQUID capsule?",
+    q: "What is a FTW capsule?",
     a: (
       <>
         <P>
-          The SQUID capsule (bond) is the mechanic we use to raise select assets, such as ETH or SQUID-ETH LPs, for the
-          treasury. Users that want to purchase SQUID, should first check if they can get a discount by buying a
-          capsule, and if not purchase from LP. When users purchase capsules the SQUID they are owed are vested linearly
-          over several days. In most cases it's better to purchase a capsule than to buy SQUID from the market, but
+          The FTW capsule (bond) is the mechanic we use to raise select assets, such as ETH or FTW-ETH LPs, for the
+          treasury. Users that want to purchase FTW, should first check if they can get a discount by buying a
+          capsule, and if not purchase from LP. When users purchase capsules the FTW they are owed are vested linearly
+          over several days. In most cases it's better to purchase a capsule than to buy FTW from the market, but
           there can be times when the market is trading at a price lower than the capsules.
         </P>
         <P>
           The main benefit of a capsule is price consistency. Users that purchase capsules commit capital upfront, and
-          will receive a predetermined amount of SQUID as the capsules hatch. A capsule's profit would depend on SQUID
-          price when the capsule fully hatches. Capsules benefit from a rising or static SQUID price.
+          will receive a predetermined amount of FTW as the capsules hatch. A capsule's profit would depend on FTW
+          price when the capsule fully hatches. Capsules benefit from a rising or static FTW price.
         </P>
       </>
     ),
   },
   {
-    q: "What is SQUID Hibernation?",
+    q: "What is FTW Hibernation?",
     a: (
       <P>
-        Usually, the best use of SQUID is to put it into hibernation. SQUID that is in this state will be joined by more
-        and more SQUID. These additional SQUID come from supply growth. The protocol mints new SQUID tokens from the
-        treasury, the majority of which are distributed to the hibernating SQUID. Thus, the gain for hibernators will
+        Usually, the best use of FTW is to put it into hibernation. FTW that is in this state will be joined by more
+        and more FTW. These additional FTW come from supply growth. The protocol mints new FTW tokens from the
+        treasury, the majority of which are distributed to the hibernating FTW. Thus, the gain for hibernators will
         come from their auto-compounding balances.
       </P>
     ),
   },
   {
-    q: "SQUID is backed, not pegged.",
+    q: "FTW is backed, not pegged.",
     a: (
       <>
         <P>
-          Each SQUID is backed by 1 ETH (or 1ETH in equivalent value), not pegged to it. Because the treasury backs
-          every SQUID with at least 1 ETH, the protocol would buy back and burn SQUID when it trades below 1 ETH. This
-          has the effect of pushing SQUID price back up to 1 ETH. SQUID could always trade above 1 ETH because there is
+          Each FTW is backed by 1 ETH (or 1ETH in equivalent value), not pegged to it. Because the treasury backs
+          every FTW with at least 1 ETH, the protocol would buy back and burn FTW when it trades below 1 ETH. This
+          has the effect of pushing FTW price back up to 1 ETH. FTW could always trade above 1 ETH because there is
           no upper limit imposed by the protocol.
         </P>
         <P>Think pegged == 1, while backed {">"}= 1.</P>
         <P>
-          You might say that the SQUID floor price or intrinsic value is 1 ETH. We believe that the actual price will
+          You might say that the FTW floor price or intrinsic value is 1 ETH. We believe that the actual price will
           always be 1 ETH + premium, but in the end that is up to the market to decide.
         </P>
       </>
     ),
   },
   {
-    q: "Who created SQUID DAO?",
+    q: "Who created FTW DAO?",
     a: <P>Anons</P>,
   },
   {
-    q: "Who runs SQUID DAO?",
+    q: "Who runs FTW DAO?",
     a: (
       <P>
-        No one. SQUID is DAO-governed. All decisions are formed by community members on the forum and made by token
+        No one. FTW is DAO-governed. All decisions are formed by community members on the forum and made by token
         holders through snapshot voting.
       </P>
     ),
