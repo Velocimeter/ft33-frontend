@@ -96,11 +96,11 @@ function Stake() {
     // 1st catch if quantity > balance
     let gweiValue = ethers.utils.parseUnits(quantity, "gwei");
     if (action === "stake" && gweiValue.gt(ethers.utils.parseUnits(ohmBalance, "gwei"))) {
-      return dispatch(error("You cannot stake more than your SQUID balance."));
+      return dispatch(error("You cannot stake more than your FTW balance."));
     }
 
     if (action === "unstake" && gweiValue.gt(ethers.utils.parseUnits(sohmBalance, "gwei"))) {
-      return dispatch(error("You cannot unstake more than your sSQUID balance."));
+      return dispatch(error("You cannot unstake more than your sFTW balance."));
     }
 
     await dispatch(changeStake({ address, action, value: quantity.toString(), provider, networkID: chainID }));
@@ -188,7 +188,7 @@ function Stake() {
               <div className="wallet-menu" id="wallet-menu">
                 {modalButton}
               </div>
-              <Typography variant="h6">Connect your wallet to stake SQUID</Typography>
+              <Typography variant="h6">Connect your wallet to stake FTW</Typography>
             </div>
           ) : (
             <>
@@ -214,15 +214,15 @@ function Stake() {
                         <Typography variant="body1" className="stake-note" color="textSecondary">
                           {view === 0 ? (
                             <>
-                              First time staking <b>SQUID</b>?
+                              First time staking <b>FTW</b>?
                               <br />
-                              Please approve Squid Dao to use your <b>SQUID</b> for staking.
+                              Please approve FTW Dao to use your <b>FTW</b> for staking.
                             </>
                           ) : (
                             <>
-                              First time unstaking <b>sSQUID</b>?
+                              First time unstaking <b>sFTW</b>?
                               <br />
-                              Please approve Squid Dao to use your <b>sSQUID</b> for unstaking.
+                              Please approve FTW Dao to use your <b>sFTW</b> for unstaking.
                             </>
                           )}
                         </Typography>
@@ -265,7 +265,7 @@ function Stake() {
                           onChangeStake("stake");
                         }}
                       >
-                        {txnButtonText(pendingTransactions, "staking", "Stake SQUID")}
+                        {txnButtonText(pendingTransactions, "staking", "Stake FTW")}
                       </Button>
                     ) : (
                       <Button
@@ -294,7 +294,7 @@ function Stake() {
                           onChangeStake("unstake");
                         }}
                       >
-                        {txnButtonText(pendingTransactions, "unstaking", "Unstake SQUID")}
+                        {txnButtonText(pendingTransactions, "unstaking", "Unstake FTW")}
                       </Button>
                     ) : (
                       <Button
@@ -319,7 +319,7 @@ function Stake() {
                     Your Balance
                   </Typography>
                   <Typography variant="body1">
-                    {isAppLoading ? <Skeleton width="80px" /> : <>{trim(ohmBalance, 6)} SQUID</>}
+                    {isAppLoading ? <Skeleton width="80px" /> : <>{trim(ohmBalance, 6)} FTW</>}
                   </Typography>
                 </div>
 
@@ -328,7 +328,7 @@ function Stake() {
                     Your Staked Balance
                   </Typography>
                   <Typography variant="body1">
-                    {isAppLoading ? <Skeleton width="80px" /> : <>{trimmedBalance} sSQUID</>}
+                    {isAppLoading ? <Skeleton width="80px" /> : <>{trimmedBalance} sFTW</>}
                   </Typography>
                 </div>
 
@@ -337,7 +337,7 @@ function Stake() {
                     Next Reward Amount
                   </Typography>
                   <Typography variant="body1">
-                    {isAppLoading ? <Skeleton width="80px" /> : <>{nextRewardValue} sSQUID</>}
+                    {isAppLoading ? <Skeleton width="80px" /> : <>{nextRewardValue} sFTW</>}
                   </Typography>
                 </div>
 
