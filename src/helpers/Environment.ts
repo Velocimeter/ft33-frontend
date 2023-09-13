@@ -46,7 +46,7 @@ export class EnvHelper {
 
     // now add the uri path
     if (ALCHEMY_ID_LIST.length > 0) {
-      ALCHEMY_ID_LIST = ALCHEMY_ID_LIST.map(alchemyID => `https://eth-mainnet.alchemyapi.io/v2/${alchemyID}`);
+      ALCHEMY_ID_LIST = ALCHEMY_ID_LIST.map(alchemyID => `https://base-mainnet.g.alchemy.com/v2/${alchemyID}`);
     } else {
       ALCHEMY_ID_LIST = [];
     }
@@ -99,10 +99,6 @@ export class EnvHelper {
    */
   static getAPIUris() {
     let ALL_URIs = EnvHelper.getSelfHostedNode();
-    if (EnvHelper.env.NODE_ENV === "development" && ALL_URIs.length === 0) {
-      // push in the common ethers key in development
-      ALL_URIs.push("https://eth-mainnet.alchemyapi.io/v2/_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC");
-    }
     if (ALL_URIs.length === 0) console.error("API keys must be set in the .env");
     return ALL_URIs;
   }
