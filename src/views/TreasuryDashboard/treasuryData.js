@@ -140,14 +140,14 @@ export const tooltipItems = {
 };
 
 export const tooltipInfoMessages = {
-  tvl: "Total Value Deposited, is the amount of all SQUID staked in the protocol. This metric is often used as growth or health indicator in DeFi projects.",
+  tvl: "Total Value Deposited, is the amount of all FTW staked in the protocol. This metric is often used as growth or health indicator in DeFi projects.",
   mvt: "Market Value of Treasury Assets, is the sum of the value (in ETH) of all assets held by the treasury.",
-  rfv: "Risk Free Value, is the amount of funds the treasury guarantees to use for backing SQUID.",
+  rfv: "Risk Free Value, is the amount of funds the treasury guarantees to use for backing FTW.",
   pol: "Protocol Owned Liquidity, is the amount of LP the treasury owns and controls. The more POL the better for the protocol and its users.",
-  holder: "Holders, represents the total number of sSQUID holders",
-  staked: "SQUID Staked, is the ratio of sSQUID to SQUID (staked vs unstaked)",
+  holder: "Holders, represents the total number of sFTW holders",
+  staked: "FTW Staked, is the ratio of sFTW to FTW (staked vs unstaked)",
   apy: "Annual Percentage Yield, is the normalized representation of an interest rate, based on a compounding period over one year. Note that APYs provided are rather ballpark level indicators and not so much precise future results.",
-  runway: "Runway, is the number of days sSQUID emissions can be sustained at a given rate. Lower APY = longer runway",
+  runway: "Runway, is the number of days sFTW emissions can be sustained at a given rate. Lower APY = longer runway",
 };
 
 export const itemType = {
