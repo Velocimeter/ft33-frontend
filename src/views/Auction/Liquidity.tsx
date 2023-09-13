@@ -15,7 +15,7 @@ const Liquidity: React.FC<{ treasuryLPBalance: number; ratio: number }> = ({ tre
         </div>
       </div>
       <P>
-        The Squid DAO treasury owns almost all of the liquidity of its token. This grants two major benefits to the DAO.
+        The FT33 DAO treasury bonds FTW-USDC. This grants two major benefits to the DAO.
       </P>
       <P>Firstly, it grows the treasury value via the trading fees collected.</P>
       <P>
