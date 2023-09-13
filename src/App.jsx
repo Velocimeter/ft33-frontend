@@ -215,7 +215,7 @@ function App() {
             </Route>
 
             <Route exact path="/">
-              <Redirect to="/auction" />
+              <Redirect to="/about" />
             </Route>
 
             <Route path="/stake">
@@ -230,11 +230,7 @@ function App() {
             {/*  <Treasury />*/}
             {/*</Route>*/}
 
-            <Route path="/auction" exact>
-              <Auction />
-            </Route>
-
-            <Route path="/auction/:id" exact>
+            <Route path="/about" exact>
               <Auction />
             </Route>
 

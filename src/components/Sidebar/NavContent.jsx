@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import Social from "./Social";
 import externalUrls from "./externalUrls";
 import { ReactComponent as StakeIcon } from "../../assets/icons/stake.svg";
-import { ReactComponent as AuctionIcon } from "../../assets/icons/auction.svg";
+import { ReactComponent as AboutIcon } from "../../assets/icons/about.svg";
 import { ReactComponent as BondIcon } from "../../assets/icons/bond.svg";
 import { ReactComponent as DashboardIcon } from "../../assets/icons/dashboard.svg";
 import { ReactComponent as SquidIcon } from "../../assets/icons/squid.svg";
@@ -74,6 +74,20 @@ function NavContent() {
             <div className="dapp-nav" id="navbarNav">
               <Link
                 component={NavLink}
+                id="auction-nav"
+                to="/about"
+                isActive={(match, location) => {
+                  return checkPage(match, location, "about");
+                }}
+                className={`button-dapp-menu ${isActive ? "active" : ""}`}
+              >
+                <Typography variant="h6">
+                  <SvgIcon color="primary" component={AboutIcon} style={{ fill: "none" }} viewBox="0 0 25 24" />
+                  About
+                </Typography>
+              </Link>
+              <Link
+                component={NavLink}
                 id="dash-nav"
                 to="/dashboard"
                 isActive={(match, location) => {
@@ -86,21 +100,6 @@ function NavContent() {
                   Dashboard
                 </Typography>
               </Link>
-
-              {/* <Link
-                component={NavLink}
-                id="auction-nav"
-                to="/auction"
-                isActive={(match, location) => {
-                  return checkPage(match, location, "auction");
-                }}
-                className={`button-dapp-menu ${isActive ? "active" : ""}`}
-              >
-                <Typography variant="h6">
-                  <SvgIcon color="primary" component={AuctionIcon} style={{ fill: "none" }} viewBox="0 0 25 24" />
-                  Auction
-                </Typography>
-              </Link> */}
 
               <Link
                 component={NavLink}
