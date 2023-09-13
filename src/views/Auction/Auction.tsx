@@ -14,10 +14,10 @@ import apollo from "../../lib/apolloClient";
 import { treasuryDataQuery } from "../TreasuryDashboard/treasuryData.js";
 import { Modal, ModalProvider } from "./Modal";
 
-import nft01 from "../../assets/images/nft_01.png";
-import nft02 from "../../assets/images/nft_02.png";
-import nft03 from "../../assets/images/nft_03.png";
-import nft04 from "../../assets/images/nft_04.png";
+import nft01 from "../../assets/images/ft33.png";
+import nft02 from "../../assets/images/brent.png";
+import nft03 from "../../assets/images/ice.png";
+import nft04 from "../../assets/images/herro.png";
 import ethereumIcon from "../../assets/icons/ethereum.svg";
 import squidIcon from "../../assets/icons/logo.svg";
 import coinIcon from "../../assets/icons/coin.svg";
