@@ -154,7 +154,7 @@ function TreasuryDashboard() {
                   type="area"
                   data={data}
                   dataKey={["totalValueLocked"]}
-                  stopColor={[["#7558C6", "rgba(255, 110, 214, 0.2)"]]}
+                  stopColor={[["#00bafa", "rgba(0, 186, 250, 0.2)"]]}
                   headerText="Total Value Deposited"
                   headerSubText={`${data && formatEth(data[0].totalValueLocked)}`}
                   bulletpointColors={bulletpoints.tvl}
@@ -173,7 +173,7 @@ function TreasuryDashboard() {
                   data={data}
                   dataKey={["treasuryEthMarketValue"]}
                   stopColor={[
-                    ["#7558C6", "rgba(255, 110, 214, 0.2)"],
+                    ["#00bafa", "rgba(0, 186, 250, 0.2)"],
                     ["#58BFC6", "rgba(110, 151, 255, 0.2)"],
                     ["#DC30EB", "#EA98F1"],
                     ["#8BFF4D", "#4C8C2A"],
@@ -197,7 +197,7 @@ function TreasuryDashboard() {
                   format="currency"
                   dataKey={["treasuryEthRiskFreeValue"]}
                   stopColor={[
-                    ["#7558C6", "rgba(255, 110, 214, 0.2)"],
+                    ["#00bafa", "rgba(0, 186, 250, 0.2)"],
                     ["#58BFC6", "rgba(110, 151, 255, 0.2)"],
                     ["#000", "#fff"],
                     ["#000", "#fff"],
@@ -219,7 +219,7 @@ function TreasuryDashboard() {
                   type="area"
                   data={data}
                   dataKey={["treasurySquidEthPOL"]}
-                  stopColor={[["#7558C6", "rgba(255, 110, 214, 0.2)"]]}
+                  stopColor={[["#00bafa", "rgba(0, 186, 250, 0.2)"]]}
                   headerText="Protocol Owned Liquidity SQUID-WETH"
                   headerSubText={`${data && trim(data[0].treasurySquidEthPOL, 2)}% `}
                   dataFormat="percent"
@@ -257,7 +257,7 @@ function TreasuryDashboard() {
                   type="area"
                   data={staked}
                   dataKey={["staked"]}
-                  stopColor={[["#7558C6", "rgba(255, 110, 214, 0.2)"]]}
+                  stopColor={[["#00bafa", "rgba(0, 186, 250, 0.2)"]]}
                   headerText="SQUID Staked"
                   dataFormat="percent"
                   headerSubText={`${staked && trim(staked[0].staked, 2)}% `}
