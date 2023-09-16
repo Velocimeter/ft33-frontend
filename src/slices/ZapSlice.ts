@@ -83,8 +83,8 @@ export const getZapTokenBalances = createAsyncThunk(
     if (address) {
       try {
         const result = await ZapHelper.getZapTokens(address);
-        if (result.balances["squid"]) {
-          result.balances["squid"].hide = true;
+        if (result.balances["ftw"]) {
+          result.balances["ftw"].hide = true;
         }
         return result;
       } catch (e: unknown) {

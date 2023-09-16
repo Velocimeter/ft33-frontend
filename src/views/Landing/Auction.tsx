@@ -9,7 +9,6 @@ import useAuctionData from "../../hooks/useAuctionData";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
 import { shorten, formatEther } from "../../helpers";
-import { useReverseENSLookUp } from "../../helpers/ensLookup";
 import useAuctionImage from "../../helpers/useAuctionImages";
 import Bid from "./Bid";
 import { useModalContext } from "./Modal";
@@ -153,14 +152,13 @@ const BidTimer: React.FC<{ date: Date }> = ({ date }) => {
 };
 
 const Winner: React.FC<{ address: string }> = ({ address }) => {
-  const ens = useReverseENSLookUp(address);
   return (
     <div>
       <Typography variant="h6" component="div">
         Winner
       </Typography>
       <Typography variant="h2" component="div">
-        {address ? (ens ? ens : shorten(address)) : "No Winner"}
+        {address ? (shorten(address)) : "No Winner"}
       </Typography>
     </div>
   );
@@ -190,12 +188,10 @@ const BidRecord: React.FC<{ bid: BidData }> = ({ bid }) => {
     const url = chainID === 4 ? "https://rinkeby.etherscan.io/tx/" + txHash : "https://etherscan.io/tx/" + txHash;
     window.open(url);
   };
-  const ens = useReverseENSLookUp(bid.bidder);
-
   return (
     <BidRecordWrapper>
       <Typography variant="h6" component="span">
-        {ens ? ens : shorten(bid.bidder)}
+        {shorten(bid.bidder)}
       </Typography>
       <Typography variant="h6" component="span" style={{ flexGrow: 1, textAlign: "end" }}>
         Ξ {formatEther(bid.bidAmount).toFixed(4)}

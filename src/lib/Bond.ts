@@ -7,7 +7,7 @@ import { addresses } from "src/constants";
 import React, { ReactNode } from "react";
 
 export enum NetworkID {
-  Mainnet = 8453,
+  Base = 8453,
 }
 
 export enum BondType {
@@ -21,7 +21,7 @@ export interface BondAddresses {
 }
 
 export interface NetworkAddresses {
-  [NetworkID.Mainnet]: BondAddresses;
+  [NetworkID.Base]: BondAddresses;
 }
 
 interface BondOpts {

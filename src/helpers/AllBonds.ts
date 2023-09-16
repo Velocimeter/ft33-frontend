@@ -32,7 +32,7 @@ export const weth = new StableBond({
   bondIconSvg: wETHImg,
   bondContractABI: WethBondContract,
   networkAddrs: {
-    [NetworkID.Mainnet]: {
+    [NetworkID.Base]: {
       bondAddress: "0x29d3646Af367dBa96E1b09A196c60FA20A3dAfF4",
       reserveAddress: "0x4200000000000000000000000000000000000006",
     },
@@ -47,9 +47,9 @@ export const usdc = new StableBond({
   bondIconSvg: USDCImg,
   bondContractABI: FraxBondContract,
   networkAddrs: {
-    [NetworkID.Mainnet]: {
+    [NetworkID.Base]: {
       bondAddress: "0x81Dcb847fc51487ba39D228425344ecB53ebfB6E",
-      reserveAddress: "0xd9aaec86b65d86f6a7b5b1b0c42ffa531710b6ca",
+      reserveAddress: "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
     },
   },
 });
