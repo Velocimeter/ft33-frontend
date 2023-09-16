@@ -3,7 +3,7 @@ import { addresses } from "src/constants";
 
 import { ReactComponent as DaiImg } from "src/assets/tokens/DAI.svg";
 import { ReactComponent as OhmDaiImg } from "src/assets/tokens/OHM-DAI.svg";
-import { ReactComponent as FraxImg } from "src/assets/tokens/FRAX.svg";
+import { ReactComponent as USDCImg } from "src/assets/tokens/usdc.svg";
 import { ReactComponent as OhmFraxImg } from "src/assets/tokens/OHM-FRAX.svg";
 import { ReactComponent as OhmLusdImg } from "src/assets/tokens/OHM-LUSD.svg";
 import { ReactComponent as wETHImg } from "src/assets/tokens/wETH.svg";
@@ -25,7 +25,7 @@ import { abi as EthBondContract } from "src/abi/bonds/EthContract.json";
 // TODO(zx): Further modularize by splitting up reserveAssets into vendor token definitions
 //   and include that in the definition of a bond
 export const weth = new StableBond({
-  active: false,
+  active: true,
   name: "weth",
   displayName: "WETH",
   bondToken: "WETH",
@@ -40,11 +40,11 @@ export const weth = new StableBond({
 });
 
 export const usdc = new StableBond({
-  active: false, // unused
+  active: true, // unused
   name: "usdc",
-  displayName: "USDbC",
-  bondToken: "USDbC",
-  bondIconSvg: FraxImg,
+  displayName: "USDC",
+  bondToken: "USDC",
+  bondIconSvg: USDCImg,
   bondContractABI: FraxBondContract,
   networkAddrs: {
     [NetworkID.Mainnet]: {
