@@ -135,7 +135,7 @@ function BondPurchase({ bond, slippage, recipientAddress }) {
             {!hasAllowance() ? (
               <div className="help-text">
                 <Typography variant="body1" align="left" color="textSecondary">
-                  First time bonding <b>{bond.displayName}</b>? <br /> Please approve Squid Dao to use your{" "}
+                  First time bonding <b>{bond.displayName}</b>? <br /> Please approve FT33 Dao to use your{" "}
                   <b>{bond.displayName}</b> for bonding.
                 </Typography>
               </div>
@@ -205,14 +205,14 @@ function BondPurchase({ bond, slippage, recipientAddress }) {
           <div className={`data-row`}>
             <Typography>You Will Get</Typography>
             <Typography id="bond-value-id" className="price-data">
-              {isBondLoading ? <Skeleton width="100px" /> : `${trim(bond.bondQuote, 9) || "0"} SQUID`}
+              {isBondLoading ? <Skeleton width="100px" /> : `${trim(bond.bondQuote, 9) || "0"} FTW`}
             </Typography>
           </div>
 
           <div className={`data-row`}>
             <Typography>Max You Can Buy</Typography>
             <Typography id="bond-value-id" className="price-data">
-              {isBondLoading ? <Skeleton width="100px" /> : `${trim(bond.maxBondPrice, 9) || "0"} SQUID`}
+              {isBondLoading ? <Skeleton width="100px" /> : `${trim(bond.maxBondPrice, 9) || "0"} FTW`}
             </Typography>
           </div>
 
