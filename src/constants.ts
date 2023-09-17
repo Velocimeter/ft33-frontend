@@ -1,4 +1,4 @@
-export const THE_GRAPH_URL = "https://api.studio.thegraph.com/query/53020/ft33/2";
+export const THE_GRAPH_URL = "https://api.studio.thegraph.com/query/53020/ft33/3";
 export const EPOCH_INTERVAL = 2200;
 
 // NOTE could get this from an outside source since it changes slightly over time
