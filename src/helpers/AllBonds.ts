@@ -29,6 +29,7 @@ export const weth = new StableBond({
   name: "weth",
   displayName: "WETH",
   bondToken: "WETH",
+  decimals: 18,
   bondIconSvg: wETHImg,
   bondContractABI: WethBondContract,
   networkAddrs: {
@@ -44,6 +45,7 @@ export const usdc = new StableBond({
   name: "usdc",
   displayName: "USDC",
   bondToken: "USDC",
+  decimals: 6,
   bondIconSvg: USDCImg,
   bondContractABI: FraxBondContract,
   networkAddrs: {
