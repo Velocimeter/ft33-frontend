@@ -94,7 +94,7 @@ function BondPurchase({ bond, slippage, recipientAddress }) {
     } else {
       maxQ = bond.balance;
     }
-    setQuantity(maxQ);
+    setQuantity(typeof maxQ === "string" ? maxQ : maxQ.toString());
   };
 
   const bondDetailsDebounce = useDebounce(quantity, 1000);

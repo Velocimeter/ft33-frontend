@@ -69,7 +69,7 @@ export const calcBondDetails = createAsyncThunk(
     if (!value) {
       value = "0";
     }
-    const amountInWei = ethers.utils.parseEther(value);
+    const amountInWei = ethers.utils.parseUnits(value, bond.decimals);
 
     // const vestingTerm = VESTING_TERM; // hardcoded for now
     let bondPrice = 0,
@@ -133,7 +133,7 @@ export const calcBondDetails = createAsyncThunk(
       const errorString =
         "You're trying to bond more than the maximum payout available! The maximum bond payout is " +
         (maxBondPrice / Math.pow(10, 9)).toFixed(2).toString() +
-        " SQUID.";
+        " FTW.";
       dispatch(error(errorString));
     }
 
@@ -151,7 +151,7 @@ export const calcBondDetails = createAsyncThunk(
       purchased,
       vestingTerm: Number(terms.vestingTerm),
       maxBondPrice: maxBondPrice / Math.pow(10, 9),
-      bondPrice: bondPrice / Math.pow(10, 18),
+      bondPrice: bondPrice / Math.pow(10, bond.decimals),
       marketPrice: marketPrice,
       underlyingPrice,
       soldOut,
