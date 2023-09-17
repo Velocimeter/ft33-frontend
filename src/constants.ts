@@ -1,4 +1,4 @@
-export const THE_GRAPH_URL = "https://api.thegraph.com/subgraphs/name/squiddaodev/squid-dao";
+export const THE_GRAPH_URL = "https://thegraph.com/explorer/subgraph/cryptovash/frentek33-based";
 export const EPOCH_INTERVAL = 2200;
 
 // NOTE could get this from an outside source since it changes slightly over time
