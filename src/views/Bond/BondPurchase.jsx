@@ -196,7 +196,7 @@ function BondPurchase({ bond, slippage, recipientAddress }) {
                 <Skeleton width="100px" />
               ) : (
                 <>
-                  {trim(bond.balance, 9)} {displayUnits}
+                  {trim(bond.balance, 6)} {displayUnits}
                 </>
               )}
             </Typography>
