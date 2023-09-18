@@ -62,7 +62,7 @@ export const dai = new StableBond({
   bondToken: "DAI",
   decimals: 18,
   bondIconSvg: DaiImg,
-  bondContractABI: FraxBondContract,
+  bondContractABI: DaiBondContract,
   networkAddrs: {
     [NetworkID.Base]: {
       bondAddress: "0x1904FAef155a8104Da392b4452dAbBf10ba0f62c",
