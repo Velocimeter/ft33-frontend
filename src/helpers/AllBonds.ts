@@ -55,6 +55,21 @@ export const usdc = new StableBond({
     },
   },
 });
+export const dai = new StableBond({
+  active: true, // unused
+  name: "dai",
+  displayName: "DAI",
+  bondToken: "DAI",
+  decimals: 6,
+  bondIconSvg: USDCImg,
+  bondContractABI: FraxBondContract,
+  networkAddrs: {
+    [NetworkID.Base]: {
+      bondAddress: "0x1904FAef155a8104Da392b4452dAbBf10ba0f62c",
+      reserveAddress: "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+    },
+  },
+});
 
 // export const eth = new CustomBond({
 //   active: false, // unused
@@ -111,7 +126,7 @@ export const usdc = new StableBond({
 // Is it an LP Bond? use `new LPBond`
 // Add new bonds to this array!!
 //export const allBonds = [dai, frax, eth, ohm_dai, ohm_frax, lusd, ohm_lusd];
-export const allBonds = [weth, usdc];
+export const allBonds = [weth, usdc, dai];
 export const allBondsMap: { [name: string]: LPBond | StableBond } = allBonds.reduce((prevVal, bond) => {
   return { ...prevVal, [bond.name]: bond };
 }, {});
