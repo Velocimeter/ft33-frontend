@@ -49,7 +49,7 @@ function BondPurchase({ bond, slippage, recipientAddress }) {
       dispatch(error("Please enter a valid value!"));
     } else if (bond.interestDue > 0 || bond.pendingPayout > 0) {
       const shouldProceed = window.confirm(
-        "Only one capsule can be held in one wallet at a time. If attempting to bond an additional on squid.xyz, then your vesting period will be extended. We recommend claiming rewards first but if you choose not to it will simply be extended.",
+        "Only one bond can be held in one wallet at a time. If attempting to bond an additional, then your vesting period will be extended. We recommend claiming rewards first but if you choose not to it will simply be extended.",
       );
       if (shouldProceed) {
         await dispatch(
