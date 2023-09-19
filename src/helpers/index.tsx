@@ -84,6 +84,7 @@ export async function getMarketPrice({ networkID, provider }: IBaseAsyncThunk) {
   // commit('set', { marketPrice: marketPrice / Math.pow(10, 9) });
   return marketPrice;
 }
+console.log("dexscreenerprice", marketPrice);
 
 async function getDexScreenerPrice(tokenAddy: string, tokenSymbol: string) {
   const res = await fetch(`
@@ -128,7 +129,7 @@ export function formatCurrency(c: number, precision = 0) {
 }
 
 export function formatEth(c: number, precision = 0) {
-  return "Ξ " + commify(new BN(c).toFixed(precision));
+  return "$ " + commify(new BN(c).toFixed(precision));
 }
 
 export function commify(n: string | number, precision?: number) {
