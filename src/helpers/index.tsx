@@ -83,8 +83,10 @@ export async function getMarketPrice({ networkID, provider }: IBaseAsyncThunk) {
 
   // commit('set', { marketPrice: marketPrice / Math.pow(10, 9) });
   return marketPrice;
+
+  console.log("dexscreenerprice", marketPrice);
 }
-console.log("dexscreenerprice", marketPrice);
+
 
 async function getDexScreenerPrice(tokenAddy: string, tokenSymbol: string) {
   const res = await fetch(`
