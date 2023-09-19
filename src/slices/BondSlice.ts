@@ -185,6 +185,7 @@ export const bondAsset = createAsyncThunk(
       txHash: null,
     };
     try {
+      console.log("Calling deposit: ", valueInWei.toBigInt(), maxPremium, depositorAddress)
       bondTx = await bondContract.deposit(valueInWei, maxPremium, depositorAddress);
       dispatch(
         fetchPendingTxns({ txnHash: bondTx.hash, text: "Bonding " + bond.displayName, type: "bond_" + bond.name }),
