@@ -71,20 +71,20 @@ import { IBaseAsyncThunk } from "src/slices/interfaces";
 
 // NOTE (appleseed): this looks like an outdated method... we now have this data in the graph (used elsewhere in the app)
 export async function getMarketPrice({ networkID, provider }: IBaseAsyncThunk) {
-  // const ohm_dai_address = squid_weth.getAddressForReserve(networkID);
-  // const pairContract = new ethers.Contract(ohm_dai_address, PairContract, provider);
-  // const reserves = await pairContract.getReserves();
+ const ohm_dai_address = "0x7B809866EAA8137D902f83bF7CbE77B41D0Df70c";
+ const pairContract = new ethers.Contract(ohm_dai_address, PairContract, provider);
+const reserves = await pairContract.getReserves();
   // // TODO: Might need to change this accroding to SQUID address.
-  // const marketPrice = reserves[1] / reserves[0];
+   const marketPrice = reserves[1] / reserves[0];
 
-  const ftwAddress = addresses[networkID].SQUID_ADDRESS;
+ // const ftwAddress = addresses[networkID].SQUID_ADDRESS;
 
-  const marketPrice = await getDexScreenerPrice(ftwAddress, "FTW");
+ // const marketPrice = await getDexScreenerPrice(ftwAddress, "FTW");
 
   // commit('set', { marketPrice: marketPrice / Math.pow(10, 9) });
   return marketPrice;
 
-  console.log("dexscreenerprice", marketPrice);
+ // console.log("dexscreenerprice", marketPrice);
 }
 
 
