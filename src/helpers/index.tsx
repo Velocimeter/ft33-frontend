@@ -65,7 +65,7 @@ interface DexScrennerPair {
   pairCreatedAt?: number;
 }
 
-// import { squid_weth } from "./AllBonds";
+import { squid_weth } from "./AllBonds";
 import { JsonRpcSigner, StaticJsonRpcProvider } from "@ethersproject/providers";
 import { IBaseAsyncThunk } from "src/slices/interfaces";
 

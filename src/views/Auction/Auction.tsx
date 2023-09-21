@@ -59,12 +59,12 @@ const Auction: React.FC = () => {
     return 0;
   });
 
-  // const treasuryLPBalance = useSelector((state: IStateView) => {
-  //   if (state.bonding.loading === false && state.bonding[squid_weth.name]) {
-  //     return state.bonding[squid_weth.name].purchased;
-  //   }
-  //   return 0;
-  // });
+  const treasuryLPBalance = useSelector((state: IStateView) => {
+    if (state.bonding.loading === false && state.bonding[squid_weth.name]) {
+      return state.bonding[squid_weth.name].purchased;
+    }
+    return 0;
+  });
 
   const stakingAPY = useSelector((state: IStateView) => {
     return state.app.stakingAPY;
