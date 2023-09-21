@@ -1,5 +1,5 @@
 export const THE_GRAPH_URL = "https://api.studio.thegraph.com/query/53020/ft33/version/latest";
-export const EPOCH_INTERVAL = 14400; // number of blocks per epoch? (two second blocks 8 hour epochs)
+export const EPOCH_INTERVAL = 691200; // number of blocks per epoch? (two second blocks 8 hour epochs)
 
 // NOTE could get this from an outside source since it changes slightly over time
 export const BLOCK_RATE_SECONDS = 2;
