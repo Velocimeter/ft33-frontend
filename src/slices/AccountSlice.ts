@@ -152,7 +152,16 @@ export const calculateUserBondDetails = createAsyncThunk(
 
     const bondDetails = await bondContract.bondInfo(address);
     interestDue = bondDetails.payout / Math.pow(10, 9);
-    bondMaturationBlock = +bondDetails.vesting + +bondDetails.lastTime;
+    let lastBlock = bondDetails.lastBlock;
+    if (lastBlock.toBigInt() > BigInt(0)) {
+      // it's actually timestamp, and we need to convert it to block number
+      lastBlock = await fetch(`https://coins.llama.fi/block/base/${bondDetails.lastBlock}`)
+        .then(resp => resp.json())
+        .then(json => {
+          return json.height;
+        });
+    }
+    bondMaturationBlock = +bondDetails.vesting + +lastBlock;
     pendingPayout = await bondContract.pendingPayoutFor(address);
 
     let allowance,
