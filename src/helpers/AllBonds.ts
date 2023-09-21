@@ -74,7 +74,7 @@ export const dai = new StableBond({
 export const squid_weth = new LPBond({
   active: true,
   name: "squid_eth_lp",
-  displayName: "SQUID-ETH LP",
+  displayName: "FTW-DAI LP",
   bondToken: "ETH",
   decimals: 18,
   bondIconSvg: SquidUsdtImg,
