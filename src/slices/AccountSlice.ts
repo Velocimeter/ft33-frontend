@@ -152,7 +152,7 @@ export const calculateUserBondDetails = createAsyncThunk(
 
     const bondDetails = await bondContract.bondInfo(address);
     interestDue = bondDetails.payout / Math.pow(10, 9);
-    bondMaturationBlock = +bondDetails.vesting + +bondDetails.lastBlock;
+    bondMaturationBlock = bondDetails.vesting + bondDetails.lastBlock;
     pendingPayout = await bondContract.pendingPayoutFor(address);
 
     let allowance,
