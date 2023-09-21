@@ -75,15 +75,15 @@ export async function getMarketPrice({ networkID, provider }: IBaseAsyncThunk) {
  const pairContract = new ethers.Contract(ohm_dai_address, PairContract, provider);
 const reserves = await pairContract.getReserves();
   // // TODO: Might need to change this accroding to SQUID address.
-  //  const marketPrice = reserves[1] / reserves[0];
+    const marketPrice = reserves[1] / reserves[0];
 
   //  console.log("marketPrice", marketPrice);
 
  const ftwAddress = addresses[networkID].SQUID_ADDRESS;
 
- const marketPrice = await getDexScreenerPrice(ftwAddress, "FTW");
+// const marketPrice = await getDexScreenerPrice(ftwAddress, "FTW");
 
- console.log("marketPrice", marketPrice);
+// console.log("marketPrice", marketPrice);
 
   // commit('set', { marketPrice: marketPrice / Math.pow(10, 9) });
   return marketPrice;
