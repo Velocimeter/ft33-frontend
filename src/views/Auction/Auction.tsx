@@ -8,7 +8,7 @@ import BuySquid from "./BuySquid";
 import Liquidity from "./Liquidity";
 import Splash from "./Splash";
 import Stats from "./Stats";
-// import { allBondsMap, squid_weth } from "../../helpers/AllBonds";
+ import { allBondsMap, squid_weth } from "../../helpers/AllBonds";
 import { allBondsMap } from "../../helpers/AllBonds";
 import apollo from "../../lib/apolloClient";
 import { treasuryDataQuery } from "../TreasuryDashboard/treasuryData.js";
