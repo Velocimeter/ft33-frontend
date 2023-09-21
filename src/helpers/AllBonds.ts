@@ -99,34 +99,34 @@ export const dai = new StableBond({
 //   },
 // });
 
-// export const squid_weth = new LPBond({
-//   active: true,
-//   name: "squid_eth_lp",
-//   displayName: "SQUID-ETH LP",
-//   bondToken: "ETH",
-//   bondIconSvg: SquidUsdtImg,
-//   bondContractABI: BondOhmDaiContract,
-//   reserveContract: ReserveOhmDaiContract,
-//   networkAddrs: {
-//     [NetworkID.Mainnet]: {
-//       bondAddress: "0x5ab2493d75cbccd0762417839c83ab6b567d2f71",
-//       reserveAddress: "0xfad704847967d9067df7a60910399155fca43fe8",
-//     },
-//     [NetworkID.Testnet]: {
-//       bondAddress: "0xBfeB1d574ffA150715e5B24aDa194109472F74f0",
-//       reserveAddress: "0x481b3bc88d1628cb3132295dcfbf33711ab7d08f",
-//     },
-//   },
-//   lpUrl:
-//     "https://app.sushi.com/add/0x21ad647b8F4Fe333212e735bfC1F36B4941E6Ad2/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-// });
+export const squid_weth = new LPBond({
+  active: true,
+  name: "squid_eth_lp",
+  displayName: "SQUID-ETH LP",
+  bondToken: "ETH",
+  bondIconSvg: SquidUsdtImg,
+  bondContractABI: BondOhmDaiContract,
+  reserveContract: ReserveOhmDaiContract,
+  networkAddrs: {
+    [NetworkID.Mainnet]: {
+      bondAddress: "0x0bec648ccde8a30a2650f622e8de3a4e94d456dc",
+      reserveAddress: "0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb",
+    },
+    [NetworkID.Testnet]: {
+      bondAddress: "0xBfeB1d574ffA150715e5B24aDa194109472F74f0",
+      reserveAddress: "0x481b3bc88d1628cb3132295dcfbf33711ab7d08f",
+    },
+  },
+  lpUrl:
+    "https://app.sushi.com/add/0x21ad647b8F4Fe333212e735bfC1F36B4941E6Ad2/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+});
 
 // HOW TO ADD A NEW BOND:
 // Is it a stableCoin bond? use `new StableBond`
 // Is it an LP Bond? use `new LPBond`
 // Add new bonds to this array!!
 //export const allBonds = [dai, frax, eth, ohm_dai, ohm_frax, lusd, ohm_lusd];
-export const allBonds = [weth, usdc, dai];
+export const allBonds = [weth, usdc, dai, squid_weth];
 export const allBondsMap: { [name: string]: LPBond | StableBond } = allBonds.reduce((prevVal, bond) => {
   return { ...prevVal, [bond.name]: bond };
 }, {});
