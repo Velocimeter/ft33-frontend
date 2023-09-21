@@ -83,7 +83,7 @@ export const squid_weth = new LPBond({
   networkAddrs: {
     [NetworkID.Base]: {
       bondAddress: "0x0bec648ccde8a30a2650f622e8de3a4e94d456dc",
-      reserveAddress: "0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb",
+      reserveAddress: "0x7b809866eaa8137d902f83bf7cbe77b41d0df70c", // lp tokens
     }
   },
   lpUrl:
