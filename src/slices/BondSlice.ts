@@ -40,6 +40,9 @@ export const changeApproval = createAsyncThunk(
         }),
       );
       await approveTx.wait();
+      const [account] = await provider.listAccounts();
+      // update allowance
+      dispatch(calculateUserBondDetails({ address: account, bond, networkID, provider }));
     } catch (e: unknown) {
       dispatch(error((e as IJsonRPCError).message));
     } finally {
