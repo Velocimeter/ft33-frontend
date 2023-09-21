@@ -65,7 +65,7 @@ interface DexScrennerPair {
   pairCreatedAt?: number;
 }
 
-import { squid_weth } from "./AllBonds";
+import { ftw_dai_lp } from "./AllBonds";
 import { JsonRpcSigner, StaticJsonRpcProvider } from "@ethersproject/providers";
 import { IBaseAsyncThunk } from "src/slices/interfaces";
 
@@ -75,11 +75,15 @@ export async function getMarketPrice({ networkID, provider }: IBaseAsyncThunk) {
  const pairContract = new ethers.Contract(ohm_dai_address, PairContract, provider);
 const reserves = await pairContract.getReserves();
   // // TODO: Might need to change this accroding to SQUID address.
-   const marketPrice = reserves[1] / reserves[0];
+  //  const marketPrice = reserves[1] / reserves[0];
 
- // const ftwAddress = addresses[networkID].SQUID_ADDRESS;
+  //  console.log("marketPrice", marketPrice);
 
- // const marketPrice = await getDexScreenerPrice(ftwAddress, "FTW");
+ const ftwAddress = addresses[networkID].SQUID_ADDRESS;
+
+ const marketPrice = await getDexScreenerPrice(ftwAddress, "FTW");
+
+ console.log("marketPrice", marketPrice);
 
   // commit('set', { marketPrice: marketPrice / Math.pow(10, 9) });
   return marketPrice;
@@ -93,6 +97,7 @@ async function getDexScreenerPrice(tokenAddy: string, tokenSymbol: string) {
   https://api.dexscreener.com/latest/dex/tokens/${tokenAddy.toLowerCase()}
     `);
   const json = await res.json();
+  console.log("json", json);
   const pairs = json.pairs as DexScrennerPair[];
 
   if (pairs?.length === 0 || !pairs) {
