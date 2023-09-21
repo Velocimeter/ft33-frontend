@@ -71,9 +71,9 @@ export const dai = new StableBond({
   },
 });
 
-export const squid_weth = new LPBond({
+export const ftw_dai_lp = new LPBond({
   active: true,
-  name: "squid_eth_lp",
+  name: "ftw_dai_lp",
   displayName: "FTW-DAI LP",
   bondToken: "ETH",
   decimals: 18,
@@ -126,7 +126,7 @@ export const squid_weth = new LPBond({
 // Is it an LP Bond? use `new LPBond`
 // Add new bonds to this array!!
 //export const allBonds = [dai, frax, eth, ohm_dai, ohm_frax, lusd, ohm_lusd];
-export const allBonds = [weth, usdc, dai, squid_weth];
+export const allBonds = [usdc, dai, ftw_dai_lp];
 export const allBondsMap: { [name: string]: LPBond | StableBond } = allBonds.reduce((prevVal, bond) => {
   return { ...prevVal, [bond.name]: bond };
 }, {});
