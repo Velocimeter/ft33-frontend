@@ -102,7 +102,7 @@ export const ftw_ft33_lp = new LPBond({
   networkAddrs: {
     [NetworkID.Base]: {
       bondAddress: "0x70501b21d08036a52c87ba3351e197397d2f5a16",
-      reserveAddress: "0x7e2863475a3A036E4c33090a08939a4a7a58Ce84 ", // lp tokens
+      reserveAddress: "0x7e2863475a3A036E4c33090a08939a4a7a58Ce84", // lp tokens
     }
   },
   lpUrl:
