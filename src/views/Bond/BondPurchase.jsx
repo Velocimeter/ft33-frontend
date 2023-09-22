@@ -17,6 +17,7 @@ import { isPendingTxn, txnButtonText } from "src/slices/PendingTxnsSlice";
 import { Skeleton } from "@material-ui/lab";
 import useDebounce from "../../hooks/Debounce";
 import { error } from "../../slices/MessagesSlice";
+import { BLOCK_RATE_SECONDS } from "src/constants";
 
 function BondPurchase({ bond, slippage, recipientAddress }) {
   const SECONDS_TO_REFRESH = 60;
@@ -37,7 +38,7 @@ function BondPurchase({ bond, slippage, recipientAddress }) {
   });
 
   const vestingPeriod = () => {
-    const vestingBlock = parseInt(currentBlock) + parseInt(bond.vestingTerm);
+    const vestingBlock = parseInt(currentBlock) + parseInt(bond.vestingTerm / BLOCK_RATE_SECONDS);
     const seconds = secondsUntilBlock(currentBlock, vestingBlock);
     return prettifySeconds(seconds, "day");
   };
