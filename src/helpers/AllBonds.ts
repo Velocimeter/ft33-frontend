@@ -90,6 +90,24 @@ export const ftw_dai_lp = new LPBond({
     "https://app.sushi.com/add/0x21ad647b8F4Fe333212e735bfC1F36B4941E6Ad2/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
 });
 
+export const ftw_ft33_lp = new LPBond({
+  active: true,
+  name: "ftw_ft33_lp",
+  displayName: "FTW-FT33 LP",
+  bondToken: "ETH",
+  decimals: 18,
+  bondIconSvg: SquidUsdtImg,
+  bondContractABI: BondOhmDaiContract,
+  reserveContract: ReserveOhmDaiContract,
+  networkAddrs: {
+    [NetworkID.Base]: {
+      bondAddress: "0x70501b21d08036a52c87ba3351e197397d2f5a16",
+      reserveAddress: "0x7e2863475a3A036E4c33090a08939a4a7a58Ce84 ", // lp tokens
+    }
+  },
+  lpUrl:
+    "https://app.sushi.com/add/0x21ad647b8F4Fe333212e735bfC1F36B4941E6Ad2/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+});
 
 // export const eth = new CustomBond({
 //   active: false, // unused
@@ -126,7 +144,7 @@ export const ftw_dai_lp = new LPBond({
 // Is it an LP Bond? use `new LPBond`
 // Add new bonds to this array!!
 //export const allBonds = [dai, frax, eth, ohm_dai, ohm_frax, lusd, ohm_lusd];
-export const allBonds = [ dai, ftw_dai_lp];
+export const allBonds = [ dai, ftw_dai_lp, ftw_ft33_lp];
 export const allBondsMap: { [name: string]: LPBond | StableBond } = allBonds.reduce((prevVal, bond) => {
   return { ...prevVal, [bond.name]: bond };
 }, {});
