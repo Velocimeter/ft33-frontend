@@ -1,5 +1,5 @@
 import { ethers } from "ethers";
-import { addresses } from "../constants";
+import { BLOCK_RATE_SECONDS, addresses } from "../constants";
 import { abi as ierc20Abi } from "../abi/IERC20.json";
 import { abi as sOHM } from "../abi/sOHM.json";
 import { abi as sOHMv2 } from "../abi/sOhmv2.json";
@@ -161,7 +161,7 @@ export const calculateUserBondDetails = createAsyncThunk(
           return json.height;
         });
     }
-    bondMaturationBlock = +bondDetails.vesting + +lastBlock;
+    bondMaturationBlock = +bondDetails.vesting / BLOCK_RATE_SECONDS + +lastBlock;
     pendingPayout = await bondContract.pendingPayoutFor(address);
 
     let allowance,
