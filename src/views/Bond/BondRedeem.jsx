@@ -6,6 +6,7 @@ import { useWeb3Context } from "src/hooks/web3Context";
 import { trim, secondsUntilBlock, prettifySeconds, prettyVestingPeriod } from "../../helpers";
 import { isPendingTxn, txnButtonText } from "src/slices/PendingTxnsSlice";
 import { Skeleton } from "@material-ui/lab";
+import { BLOCK_RATE_SECONDS } from "src/constants";
 
 function BondRedeem({ bond }) {
   // const { bond: bondName } = bond;
@@ -36,7 +37,7 @@ function BondRedeem({ bond }) {
   };
 
   const vestingPeriod = () => {
-    const vestingBlock = parseInt(currentBlock) + parseInt(bondingState.vestingTerm);
+    const vestingBlock = parseInt(currentBlock) + parseInt(bondingState.vestingTerm / BLOCK_RATE_SECONDS);
     const seconds = secondsUntilBlock(currentBlock, vestingBlock);
     return prettifySeconds(seconds, "day");
   };
