@@ -2,16 +2,20 @@ import React from "react";
 import styled from "styled-components";
 import { formatEth, trim } from "../../helpers";
 
-const Stats: React.FC<{ treasuryBalance: number; stakingAPY: number; tvl: number }> = ({
+const Stats: React.FC<{
+  treasuryBalance: number;
+  stakingAPY: number;
+  // tvl: number
+}> = ({
   treasuryBalance,
   stakingAPY,
-  tvl,
+  // tvl
 }) => {
   return (
     <div className="row g-4 d-flex justify-content-around">
       <Stat title="Treasury Balance" value={formatEth(treasuryBalance)} />
       <Stat title="Current APY" value={new Intl.NumberFormat("en-US").format(trim(stakingAPY * 100, 1)) + "%"} />
-      <Stat title="Total Value Deposited" value={formatEth(tvl)} />
+      {/* <Stat title="Total Value Deposited" value={formatEth(tvl)} /> */}
     </div>
   );
 };
