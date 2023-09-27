@@ -166,7 +166,7 @@ const Auction: React.FC = () => {
             </div>
           </div>
           {/* <Liquidity treasuryLPBalance={treasuryLPBalance} ratio={ratio} /> */}
-          <Liquidity treasuryLPBalance={0} ratio={ratio} />
+          {/* <Liquidity treasuryLPBalance={0} ratio={ratio} /> */}
         </Section>
       </Wrapper>
     </ModalProvider>
