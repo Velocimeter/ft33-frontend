@@ -25,6 +25,7 @@ import { Skeleton } from "@material-ui/lab";
 import { error } from "../../slices/MessagesSlice";
 import { ethers } from "ethers";
 import styled from "styled-components";
+import { useStakingTvl } from "./helpers";
 
 function a11yProps(index) {
   return {
@@ -66,9 +67,8 @@ function Stake() {
   const stakingAPY = useSelector(state => {
     return state.app.stakingAPY;
   });
-  const stakingTVL = useSelector(state => {
-    return state.app.stakingTVL;
-  });
+
+  const stakingTVL = useStakingTvl();
 
   const pendingTransactions = useSelector(state => {
     return state.pendingTransactions;
@@ -173,7 +173,7 @@ function Stake() {
                     Total Value Deposited
                   </Typography>
                   <Typography variant="h4">
-                    {stakingTVL ? formatEth(stakingTVL) : <Skeleton width="150px" />}
+                    {stakingTVL !== undefined ? formatEth(stakingTVL) : <Skeleton width="150px" />}
                   </Typography>
                 </div>
               </Paper>
