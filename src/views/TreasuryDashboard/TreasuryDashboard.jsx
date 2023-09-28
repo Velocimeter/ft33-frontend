@@ -16,6 +16,7 @@ import { useTheme } from "@material-ui/core/styles";
 import "./treasury-dashboard.scss";
 import apollo from "../../lib/apolloClient";
 import InfoTooltip from "src/components/InfoTooltip/InfoTooltip.jsx";
+import { useCircSupply, useMarketCap, useBackingPerOhm } from "./helpers";
 
 function TreasuryDashboard() {
   const [data, setData] = useState(null);
@@ -29,23 +30,26 @@ function TreasuryDashboard() {
   const marketPrice = useSelector(state => {
     return state.app.marketPrice;
   });
-  const circSupply = useSelector(state => {
-    return state.app.circSupply;
-  });
-  const totalSupply = useSelector(state => {
-    return state.app.totalSupply;
-  });
-  const marketCap = useSelector(state => {
-    return state.app.marketCap;
-  });
+  // const circSupply = useSelector(state => {
+  //   return state.app.circSupply;
+  // });
+  // const totalSupply = useSelector(state => {
+  //   return state.app.totalSupply;
+  // });
+  const circSupply = useCircSupply();
+  // const marketCap = useSelector(state => {
+  //   return state.app.marketCap;
+  // });
+  const marketCap = useMarketCap();
 
   const currentIndex = useSelector(state => {
     return state.app.currentIndex;
   });
 
-  const backingPerOhm = useSelector(state => {
-    return state.app.treasuryMarketValue / state.app.circSupply;
-  });
+  // const backingPerOhm = useSelector(state => {
+  //   return state.app.treasuryMarketValue / state.app.circSupply;
+  // });
+  const backingPerOhm = useBackingPerOhm();
 
   const wsOhmPrice = useSelector(state => {
     return state.app.marketPrice * state.app.currentIndex;
@@ -100,8 +104,7 @@ function TreasuryDashboard() {
                 Market Cap
               </Typography>
               <Typography variant="h5">
-                {marketCap && formatEth(marketCap, 0)}
-                {!marketCap && <Skeleton type="text" />}
+                {marketCap === undefined ? <Skeleton type="text" /> : formatEth(marketCap, 0)}
               </Typography>
             </Paper>
           </Grid>
@@ -111,11 +114,7 @@ function TreasuryDashboard() {
                 Circulating Supply (total)
               </Typography>
               <Typography variant="h5">
-                {circSupply && totalSupply ? (
-                  parseInt(circSupply) + " / " + parseInt(totalSupply)
-                ) : (
-                  <Skeleton type="text" />
-                )}
+                {circSupply === undefined ? <Skeleton type="text" /> : trim(circSupply, 2)}
               </Typography>{" "}
             </Paper>
           </Grid>
@@ -125,7 +124,7 @@ function TreasuryDashboard() {
                 Backing per FTW
               </Typography>
               <Typography variant="h5">
-                {backingPerOhm ? formatEth(backingPerOhm, 2) : <Skeleton type="text" />}
+                {backingPerOhm !== undefined ? formatEth(backingPerOhm, 2) : <Skeleton type="text" />}
               </Typography>{" "}
             </Paper>
           </Grid>
