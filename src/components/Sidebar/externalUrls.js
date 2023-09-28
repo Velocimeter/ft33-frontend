@@ -7,7 +7,7 @@ import { SvgIcon } from "@material-ui/core";
 const externalUrls = [
   {
     title: "Docs",
-    url: "https://docs.friendtech33.xyz/",
+    url: "",
     icon: <SvgIcon color="primary" component={DocsIcon} style={{ fill: "none" }} />,
   },
   {
