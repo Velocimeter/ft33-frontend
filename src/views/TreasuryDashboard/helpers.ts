@@ -57,15 +57,15 @@ export function useMarketCap() {
 
 export function useBackingPerOhm() {
   const circSupply = useCircSupply();
-  const treasuryBalance = useTreasuryBalance();
+  const totalReserves = useTotalReserves();
 
   const backingPerOhm =
-    circSupply !== undefined && treasuryBalance !== undefined ? treasuryBalance / circSupply : undefined;
+    circSupply !== undefined && totalReserves !== undefined ? totalReserves / circSupply : undefined;
 
   return backingPerOhm;
 }
 
-export function useTreasuryBalance() {
+export function useTreasuryReserves() {
   const [treasuryBalance, setTreasuryBalance] = useState<number>();
 
   const { provider } = useWeb3Context();
@@ -79,16 +79,101 @@ export function useTreasuryBalance() {
 
       const daiBalanceTreasury = await daiContract.balanceOf("0x68d91Bb4b1760Bc131555D23a438585D937A8e6d");
       const daiBalanceTreasuryFormatted = ethers.utils.formatEther(daiBalanceTreasury);
+
+      setTreasuryBalance(+daiBalanceTreasuryFormatted);
+    };
+
+    getTreasuryBalance();
+  }, [provider]);
+
+  return treasuryBalance;
+}
+
+export function useMsigReserves() {
+  const [treasuryBalance, setTreasuryBalance] = useState<number>();
+
+  const { provider } = useWeb3Context();
+
+  useEffect(() => {
+    if (!provider) return;
+
+    const getTreasuryBalance = async () => {
+      // treasury only really has dai, so hardcoded to it for now
+      const daiContract = new ethers.Contract("0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb", ERC20.abi, provider);
+
       // msig only really has dai, so hardcoded to it for now
       const daiBalanceMsig = await daiContract.balanceOf("0xBbE6d178d6E11189B46ff4A9f034AB198C2E8A0f");
       const daiBalanceMsigFormatted = ethers.utils.formatEther(daiBalanceMsig);
+
+      setTreasuryBalance(+daiBalanceMsigFormatted);
+    };
+
+    getTreasuryBalance();
+  }, [provider]);
+
+  return treasuryBalance;
+}
+
+export function useHotWalletReserves() {
+  const [treasuryBalance, setTreasuryBalance] = useState<number>();
+
+  const { provider } = useWeb3Context();
+
+  useEffect(() => {
+    if (!provider) return;
+
+    const getTreasuryBalance = async () => {
+      // treasury only really has dai, so hardcoded to it for now
+      const daiContract = new ethers.Contract("0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb", ERC20.abi, provider);
+
       // ft wallet dai balance
       const daiBalanceFtWallet = await daiContract.balanceOf("0x1a6c20D8DDAf118F4d96BB074Fa5170b667399cC");
       const daiBalanceFtWalletFormatted = ethers.utils.formatEther(daiBalanceFtWallet);
 
+      const ethBalance = await provider.getBalance("0x1a6c20D8DDAf118F4d96BB074Fa5170b667399cC");
+      const ethBalanceFormatted = ethers.utils.formatEther(ethBalance);
+      const ethPrice = await getDexScreenerPrice("0x4200000000000000000000000000000000000006", "WETH");
+
+      const ethValue = +ethBalanceFormatted * +ethPrice;
+
+      setTreasuryBalance(+daiBalanceFtWalletFormatted + ethValue);
+    };
+
+    getTreasuryBalance();
+  }, [provider]);
+
+  return treasuryBalance;
+}
+export function useFtKeysValue() {
+  const [treasuryBalance, setTreasuryBalance] = useState<number>();
+
+  const { provider } = useWeb3Context();
+
+  useEffect(() => {
+    if (!provider) return;
+
+    const getTreasuryBalance = async () => {
       // ft portfolio value (this is tough, no api)
       const ftPortfolioValue = 166582.3085;
 
+      setTreasuryBalance(ftPortfolioValue);
+    };
+
+    getTreasuryBalance();
+  }, [provider]);
+
+  return treasuryBalance;
+}
+
+export function usePol() {
+  const [treasuryBalance, setTreasuryBalance] = useState<number>();
+
+  const { provider } = useWeb3Context();
+
+  useEffect(() => {
+    if (!provider) return;
+
+    const getTreasuryBalance = async () => {
       // lp value
       const ohm_dai_address = "0x7B809866EAA8137D902f83bF7CbE77B41D0Df70c";
       const gauge_address = "0x108ef56f5146a060c847bb1a7755beb24eec4bd8";
@@ -129,18 +214,36 @@ export function useTreasuryBalance() {
         +ethers.utils.formatUnits(amountsOut[0], 9) * +ethers.utils.formatUnits(ftwPrice, 18) +
         +ethers.utils.formatUnits(amountsOut[1], 18);
 
-      const treasuryBalance =
-        +daiBalanceTreasuryFormatted +
-        +daiBalanceMsigFormatted +
-        +daiBalanceFtWalletFormatted +
-        ftPortfolioValue +
-        lpValue;
-
-      setTreasuryBalance(treasuryBalance);
+      setTreasuryBalance(lpValue);
     };
 
     getTreasuryBalance();
   }, [provider]);
+
+  return treasuryBalance;
+}
+
+export function useTotalReserves() {
+  const [treasuryBalance, setTreasuryBalance] = useState<number>();
+
+  const pol = usePol();
+  const ftKeysValue = useFtKeysValue();
+  const hotWalletReserves = useHotWalletReserves();
+  const msigReserves = useMsigReserves();
+  const treasuryReserves = useTreasuryReserves();
+
+  useEffect(() => {
+    if (
+      pol === undefined ||
+      ftKeysValue === undefined ||
+      hotWalletReserves === undefined ||
+      msigReserves === undefined ||
+      treasuryReserves === undefined
+    )
+      return;
+    const total = pol + ftKeysValue + hotWalletReserves + msigReserves + treasuryReserves;
+    setTreasuryBalance(total);
+  }, [ftKeysValue, hotWalletReserves, msigReserves, pol, treasuryReserves]);
 
   return treasuryBalance;
 }

@@ -21,7 +21,7 @@ import nft04 from "../../assets/images/herro.png";
 import ethereumIcon from "../../assets/icons/ethereum.svg";
 import squidIcon from "../../assets/icons/ft33.png";
 import coinIcon from "../../assets/icons/coin.svg";
-import { useTreasuryBalance } from "../TreasuryDashboard/helpers";
+import { useTotalReserves } from "../TreasuryDashboard/helpers";
 
 interface IStateView {
   app: {
@@ -47,7 +47,7 @@ const Auction: React.FC = () => {
   const [auctionId, setAuctionId] = useState<number | undefined>(undefined);
   const [data, setData] = useState<IData[] | undefined>(undefined);
 
-  const treasuryBalance = useTreasuryBalance();
+  const treasuryBalance = useTotalReserves();
 
   const treasuryLPBalance = useSelector((state: IStateView) => {
     if (state.bonding.loading === false && state.bonding[ftw_dai_lp.name]) {

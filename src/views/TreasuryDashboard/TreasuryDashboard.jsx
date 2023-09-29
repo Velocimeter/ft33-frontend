@@ -16,20 +16,30 @@ import { useTheme } from "@material-ui/core/styles";
 import "./treasury-dashboard.scss";
 import apollo from "../../lib/apolloClient";
 import InfoTooltip from "src/components/InfoTooltip/InfoTooltip.jsx";
-import { useCircSupply, useMarketCap, useBackingPerOhm } from "./helpers";
+import {
+  useCircSupply,
+  useMarketCap,
+  useBackingPerOhm,
+  useMsigReserves,
+  useHotWalletReserves,
+  useFtKeysValue,
+  useTreasuryReserves,
+  useTotalReserves,
+  usePol,
+} from "./helpers";
 
 function TreasuryDashboard() {
-  const [data, setData] = useState(null);
-  const [apy, setApy] = useState(null);
-  const [runway, setRunway] = useState(null);
-  const [staked, setStaked] = useState(null);
-  const theme = useTheme();
+  // const [data, setData] = useState(null);
+  // const [apy, setApy] = useState(null);
+  // const [runway, setRunway] = useState(null);
+  // const [staked, setStaked] = useState(null);
+  // const theme = useTheme();
   const smallerScreen = useMediaQuery("(max-width: 650px)");
   const verySmallScreen = useMediaQuery("(max-width: 379px)");
 
-  const marketPrice = useSelector(state => {
-    return state.app.marketPrice;
-  });
+  // const marketPrice = useSelector(state => {
+  //   return state.app.marketPrice;
+  // });
   // const circSupply = useSelector(state => {
   //   return state.app.circSupply;
   // });
@@ -50,41 +60,47 @@ function TreasuryDashboard() {
   //   return state.app.treasuryMarketValue / state.app.circSupply;
   // });
   const backingPerOhm = useBackingPerOhm();
+  const totalReserves = useTotalReserves();
+  const pol = usePol();
+  const msigReserves = useMsigReserves();
+  const hotWalletReserves = useHotWalletReserves();
+  const ftKeysValue = useFtKeysValue();
+  const treasuryReserves = useTreasuryReserves();
 
-  const wsOhmPrice = useSelector(state => {
-    return state.app.marketPrice * state.app.currentIndex;
-  });
+  // const wsOhmPrice = useSelector(state => {
+  //   return state.app.marketPrice * state.app.currentIndex;
+  // });
 
-  useEffect(() => {
-    apollo(treasuryDataQuery).then(r => {
-      let metrics = r.data.protocolMetrics.map(entry =>
-        Object.entries(entry).reduce((obj, [key, value]) => ((obj[key] = parseFloat(value)), obj), {}),
-      );
-      metrics = metrics.filter(pm => pm.treasuryMarketValue > 0);
-      setData(metrics);
+  // useEffect(() => {
+  //   apollo(treasuryDataQuery).then(r => {
+  //     let metrics = r.data.protocolMetrics.map(entry =>
+  //       Object.entries(entry).reduce((obj, [key, value]) => ((obj[key] = parseFloat(value)), obj), {}),
+  //     );
+  //     metrics = metrics.filter(pm => pm.treasuryMarketValue > 0);
+  //     setData(metrics);
 
-      let staked = r.data.protocolMetrics.map(entry => ({
-        staked: (parseFloat(entry.sOhmCirculatingSupply) / parseFloat(entry.ohmCirculatingSupply)) * 100,
-        timestamp: entry.timestamp,
-      }));
-      staked = staked.filter(pm => pm.staked < 100);
-      setStaked(staked);
+  //     let staked = r.data.protocolMetrics.map(entry => ({
+  //       staked: (parseFloat(entry.sOhmCirculatingSupply) / parseFloat(entry.ohmCirculatingSupply)) * 100,
+  //       timestamp: entry.timestamp,
+  //     }));
+  //     staked = staked.filter(pm => pm.staked < 100);
+  //     setStaked(staked);
 
-      let runway = metrics.filter(pm => pm.runway10k > 5);
-      setRunway(runway);
-    });
+  //     let runway = metrics.filter(pm => pm.runway10k > 5);
+  //     setRunway(runway);
+  //   });
 
-    apollo(rebasesDataQuery).then(r => {
-      let apy = r.data.rebases.map(entry => ({
-        apy: Math.pow(parseFloat(entry.percentage) + 1, 365 * 3) * 100,
-        timestamp: entry.timestamp,
-      }));
+  //   apollo(rebasesDataQuery).then(r => {
+  //     let apy = r.data.rebases.map(entry => ({
+  //       apy: Math.pow(parseFloat(entry.percentage) + 1, 365 * 3) * 100,
+  //       timestamp: entry.timestamp,
+  //     }));
 
-      apy = apy.filter(pm => pm.apy < 300000);
+  //     apy = apy.filter(pm => pm.apy < 300000);
 
-      setApy(apy);
-    });
-  }, []);
+  //     setApy(apy);
+  //   });
+  // }, []);
 
   return (
     <div id="treasury-dashboard-view" className={`${smallerScreen && "smaller"} ${verySmallScreen && "very-small"}`}>
@@ -115,7 +131,7 @@ function TreasuryDashboard() {
               </Typography>
               <Typography variant="h5">
                 {circSupply === undefined ? <Skeleton type="text" /> : trim(circSupply, 2)}
-              </Typography>{" "}
+              </Typography>
             </Paper>
           </Grid>
           <Grid item lg={3} md={3} sm={12} xs={12}>
@@ -125,7 +141,7 @@ function TreasuryDashboard() {
               </Typography>
               <Typography variant="h5">
                 {backingPerOhm !== undefined ? formatEth(backingPerOhm, 2) : <Skeleton type="text" />}
-              </Typography>{" "}
+              </Typography>
             </Paper>
           </Grid>
           <Grid item lg={3} md={3} sm={12} xs={12}>
@@ -140,7 +156,65 @@ function TreasuryDashboard() {
               </Typography>
               <Typography variant="h5">
                 {currentIndex ? trim(currentIndex, 2) + " sFTW" : <Skeleton type="text" />}
-              </Typography>{" "}
+              </Typography>
+            </Paper>
+          </Grid>
+          <Grid item lg={3} md={3} sm={12} xs={12}>
+            <Paper className="ohm-card">
+              <Typography variant="h6" color="textSecondary">
+                MSIG Reserves
+              </Typography>
+              <Typography variant="h5">
+                {msigReserves !== undefined ? formatEth(msigReserves, 2) : <Skeleton type="text" />}
+              </Typography>
+            </Paper>
+          </Grid>
+          <Grid item lg={3} md={3} sm={12} xs={12}>
+            <Paper className="ohm-card">
+              <Typography variant="h6" color="textSecondary">
+                FT Hot Wallet Reserves
+              </Typography>
+              <Typography variant="h5">
+                {hotWalletReserves !== undefined ? formatEth(hotWalletReserves, 2) : <Skeleton type="text" />}
+              </Typography>
+            </Paper>
+          </Grid>
+          <Grid item lg={3} md={3} sm={12} xs={12}>
+            <Paper className="ohm-card">
+              <Typography variant="h6" color="textSecondary">
+                FT Keys Value
+              </Typography>
+              <Typography variant="h5">
+                {ftKeysValue !== undefined ? formatEth(ftKeysValue, 2) : <Skeleton type="text" />}
+              </Typography>
+            </Paper>
+          </Grid>
+          <Grid item lg={3} md={3} sm={12} xs={12}>
+            <Paper className="ohm-card">
+              <Typography variant="h6" color="textSecondary">
+                Treasury Reserves
+              </Typography>
+              <Typography variant="h5">
+                {treasuryReserves !== undefined ? formatEth(treasuryReserves, 2) : <Skeleton type="text" />}
+              </Typography>
+            </Paper>
+          </Grid>
+          <Grid item lg={3} md={3} sm={12} xs={12}>
+            <Paper className="ohm-card">
+              <Typography variant="h6" color="textSecondary">
+                Protocol Owned Liquidity
+              </Typography>
+              <Typography variant="h5">{pol !== undefined ? formatEth(pol, 2) : <Skeleton type="text" />}</Typography>
+            </Paper>
+          </Grid>
+          <Grid item lg={3} md={3} sm={12} xs={12}>
+            <Paper className="ohm-card">
+              <Typography variant="h6" color="textSecondary">
+                Total Reserves
+              </Typography>
+              <Typography variant="h5">
+                {totalReserves !== undefined ? formatEth(totalReserves, 2) : <Skeleton type="text" />}
+              </Typography>
             </Paper>
           </Grid>
         </Grid>
