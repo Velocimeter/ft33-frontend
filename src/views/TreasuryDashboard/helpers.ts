@@ -181,7 +181,10 @@ export function usePol() {
 
       const pairContract = new ethers.Contract(
         ohm_dai_address,
-        ["function getAmountOut(uint amountIn, address tokenIn) external view returns (uint)"],
+        [
+          "function getAmountOut(uint amountIn, address tokenIn) external view returns (uint)",
+          "function balanceOf(address owner) view returns (uint balance)",
+        ],
         provider,
       );
       const gaugeContract = new ethers.Contract(
@@ -197,7 +200,10 @@ export function usePol() {
         provider,
       );
 
-      const lpBalanceMsig = await gaugeContract.balanceOf("0xBbE6d178d6E11189B46ff4A9f034AB198C2E8A0f");
+      const lpBalanceMsigInGauge = await gaugeContract.balanceOf("0xBbE6d178d6E11189B46ff4A9f034AB198C2E8A0f");
+      const lpBalanceMsigInWallet = await pairContract.balanceOf("0xBbE6d178d6E11189B46ff4A9f034AB198C2E8A0f");
+
+      const lpBalanceMsig = lpBalanceMsigInGauge.add(lpBalanceMsigInWallet);
 
       const amountsOut = await routerContract.quoteRemoveLiquidity(
         "0x3347453ced85bd288d783d85cdec9b01ab90f9d8",
