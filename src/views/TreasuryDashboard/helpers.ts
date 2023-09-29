@@ -84,7 +84,7 @@ function useTreasuryBalance() {
       const daiBalanceMsig = await daiContract.balanceOf("0xBbE6d178d6E11189B46ff4A9f034AB198C2E8A0f");
       const daiBalanceMsigFormatted = ethers.utils.formatEther(daiBalanceMsig);
       // ft portfolio value (this is tough, no api)
-      const ftPortfolioValue = 137849.3085;
+      const ftPortfolioValue = 166582.3085;
       const treasuryBalance = +daiBalanceTreasuryFormatted + +daiBalanceMsigFormatted + ftPortfolioValue;
       setTreasuryBalance(treasuryBalance);
     };
