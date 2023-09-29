@@ -168,6 +168,23 @@ export function useFtKeysValue() {
 export function usePol() {
   const [treasuryBalance, setTreasuryBalance] = useState<number>();
 
+  const ohmDaiPol = usePolOhmDai();
+  const daiWethPol = usePolDaiWeth();
+  const bvmWethPol = usePolBvmWeth();
+
+  useEffect(() => {
+    if (ohmDaiPol === undefined || daiWethPol === undefined || bvmWethPol === undefined) return;
+
+    const pol = ohmDaiPol + daiWethPol + bvmWethPol;
+    setTreasuryBalance(pol);
+  }, [bvmWethPol, daiWethPol, ohmDaiPol]);
+
+  return treasuryBalance;
+}
+
+export function usePolOhmDai() {
+  const [treasuryBalance, setTreasuryBalance] = useState<number>();
+
   const { provider } = useWeb3Context();
 
   useEffect(() => {
@@ -219,6 +236,129 @@ export function usePol() {
       const lpValue =
         +ethers.utils.formatUnits(amountsOut[0], 9) * +ethers.utils.formatUnits(ftwPrice, 18) +
         +ethers.utils.formatUnits(amountsOut[1], 18);
+
+      setTreasuryBalance(lpValue);
+    };
+
+    getTreasuryBalance();
+  }, [provider]);
+
+  return treasuryBalance;
+}
+
+export function usePolDaiWeth() {
+  const [treasuryBalance, setTreasuryBalance] = useState<number>();
+
+  const { provider } = useWeb3Context();
+
+  useEffect(() => {
+    if (!provider) return;
+
+    const getTreasuryBalance = async () => {
+      // lp value
+      const ohm_dai_address = "0xd511ce52d24656FA76cb080a0647CfeF93BB976e";
+      const gauge_address = "0xb5e6163a8d4398f98800b173813c24f342a518c4";
+      const router_address = "0xE11b93B61f6291d35c5a2beA0A9fF169080160cF";
+
+      const pairContract = new ethers.Contract(
+        ohm_dai_address,
+        [
+          "function getAmountOut(uint amountIn, address tokenIn) external view returns (uint)",
+          "function balanceOf(address owner) view returns (uint balance)",
+        ],
+        provider,
+      );
+      const gaugeContract = new ethers.Contract(
+        gauge_address,
+        ["function balanceOf(address owner) view returns (uint balance)"],
+        provider,
+      );
+      const routerContract = new ethers.Contract(
+        router_address,
+        [
+          "function quoteRemoveLiquidity(address tokenA, address tokenB, bool stable, uint liquidity) external view returns (uint amountA, uint amountB)",
+        ],
+        provider,
+      );
+
+      const lpBalanceMsigInGauge = await gaugeContract.balanceOf("0xBbE6d178d6E11189B46ff4A9f034AB198C2E8A0f");
+      const lpBalanceMsigInWallet = await pairContract.balanceOf("0xBbE6d178d6E11189B46ff4A9f034AB198C2E8A0f");
+
+      const lpBalanceMsig = lpBalanceMsigInGauge.add(lpBalanceMsigInWallet);
+
+      const amountsOut = await routerContract.quoteRemoveLiquidity(
+        "0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb",
+        "0x4200000000000000000000000000000000000006",
+        false,
+        lpBalanceMsig,
+      );
+
+      const wethPrice = await getDexScreenerPrice("0x4200000000000000000000000000000000000006", "WETH");
+      const lpValue =
+        +ethers.utils.formatUnits(amountsOut[0], 18) + +ethers.utils.formatUnits(amountsOut[1], 18) * wethPrice;
+
+      setTreasuryBalance(lpValue);
+    };
+
+    getTreasuryBalance();
+  }, [provider]);
+
+  return treasuryBalance;
+}
+
+export function usePolBvmWeth() {
+  const [treasuryBalance, setTreasuryBalance] = useState<number>();
+
+  const { provider } = useWeb3Context();
+
+  useEffect(() => {
+    if (!provider) return;
+
+    const getTreasuryBalance = async () => {
+      // lp value
+      const bvm_weth_address = "0x53713F956A4DA3F08B55A390B20657eDF9E0897B";
+      const gauge_address = "0x3f5129112754d4fbe7ab228c2d5e312b2bc79a06";
+      const router_address = "0xE11b93B61f6291d35c5a2beA0A9fF169080160cF";
+
+      const pairContract = new ethers.Contract(
+        bvm_weth_address,
+        [
+          "function getAmountOut(uint amountIn, address tokenIn) external view returns (uint)",
+          "function balanceOf(address owner) view returns (uint balance)",
+        ],
+        provider,
+      );
+      const gaugeContract = new ethers.Contract(
+        gauge_address,
+        ["function balanceOf(address owner) view returns (uint balance)"],
+        provider,
+      );
+      const routerContract = new ethers.Contract(
+        router_address,
+        [
+          "function quoteRemoveLiquidity(address tokenA, address tokenB, bool stable, uint liquidity) external view returns (uint amountA, uint amountB)",
+        ],
+        provider,
+      );
+
+      const lpBalanceMsigInGauge = await gaugeContract.balanceOf("0xBbE6d178d6E11189B46ff4A9f034AB198C2E8A0f");
+      const lpBalanceMsigInWallet = await pairContract.balanceOf("0xBbE6d178d6E11189B46ff4A9f034AB198C2E8A0f");
+
+      const lpBalanceMsig = lpBalanceMsigInGauge.add(lpBalanceMsigInWallet);
+
+      const amountsOut = await routerContract.quoteRemoveLiquidity(
+        "0xd386a121991e51eab5e3433bf5b1cf4c8884b47a",
+        "0x4200000000000000000000000000000000000006",
+        false,
+        lpBalanceMsig,
+      );
+
+      const priceOfBvm = await getDexScreenerPrice("0xd386a121991e51eab5e3433bf5b1cf4c8884b47a", "BVM");
+      const priceOfWeth = await getDexScreenerPrice("0x4200000000000000000000000000000000000006", "WETH");
+
+      const lpValue =
+        +ethers.utils.formatUnits(amountsOut[0], 18) * priceOfBvm +
+        +ethers.utils.formatUnits(amountsOut[1], 18) * priceOfWeth;
 
       setTreasuryBalance(lpValue);
     };
