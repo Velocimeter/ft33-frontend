@@ -1,4 +1,5 @@
 import { ERC20 } from "@usedapp/core";
+import { abi as PairContract } from "../../abi/PairContract.json";
 import { ethers } from "ethers";
 import { useEffect, useState } from "react";
 import { getDexScreenerPrice } from "src/helpers";
@@ -67,7 +68,7 @@ export function useBackingPerOhm() {
   return backingPerOhm;
 }
 
-function useTreasuryBalance() {
+export function useTreasuryBalance() {
   const [treasuryBalance, setTreasuryBalance] = useState<number>();
 
   const { provider } = useWeb3Context();
@@ -78,15 +79,41 @@ function useTreasuryBalance() {
     const getTreasuryBalance = async () => {
       // treasury only really has dai, so hardcoded to it for now
       const daiContract = new ethers.Contract("0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb", ERC20.abi, provider);
+
       const daiBalanceTreasury = await daiContract.balanceOf("0x68d91Bb4b1760Bc131555D23a438585D937A8e6d");
       const daiBalanceTreasuryFormatted = ethers.utils.formatEther(daiBalanceTreasury);
       // msig only really has dai, so hardcoded to it for now
       const daiBalanceMsig = await daiContract.balanceOf("0xBbE6d178d6E11189B46ff4A9f034AB198C2E8A0f");
       const daiBalanceMsigFormatted = ethers.utils.formatEther(daiBalanceMsig);
+      // ft wallet dai balance
+      const daiBalanceFtWallet = await daiContract.balanceOf("0x1a6c20D8DDAf118F4d96BB074Fa5170b667399cC");
+      const daiBalanceFtWalletFormatted = ethers.utils.formatEther(daiBalanceFtWallet);
+
       // ft portfolio value (this is tough, no api)
       const ftPortfolioValue = 166582.3085;
+
+      // lp value
       const liquidityPoolsTotalMinusFtw = 95000;
-      const treasuryBalance = +daiBalanceTreasuryFormatted + +daiBalanceMsigFormatted + ftPortfolioValue + liquidityPoolsTotalMinusFtw;
+      // const ohm_dai_address = "0x7B809866EAA8137D902f83bF7CbE77B41D0Df70c";
+      // const gauge_address = "0x108ef56f5146a060c847bb1a7755beb24eec4bd8";
+
+      // const pairContract = new ethers.Contract(ohm_dai_address, PairContract, provider);
+      // const gaugeContract = new ethers.Contract(
+      //   gauge_address,
+      //   ["function balanceOf(address owner) view returns (uint balance)"],
+      //   provider,
+      // );
+
+      // const lpBalanceMsig = await gaugeContract.balanceOf("0xBbE6d178d6E11189B46ff4A9f034AB198C2E8A0f");
+      // const lpBalanceMsigFormatted = ethers.utils.formatUnits(lpBalanceMsig, 18);
+
+      const treasuryBalance =
+        +daiBalanceTreasuryFormatted +
+        +daiBalanceMsigFormatted +
+        +daiBalanceFtWalletFormatted +
+        ftPortfolioValue +
+        liquidityPoolsTotalMinusFtw;
+
       setTreasuryBalance(treasuryBalance);
     };
 

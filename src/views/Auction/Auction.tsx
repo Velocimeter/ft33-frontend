@@ -21,9 +21,7 @@ import nft04 from "../../assets/images/herro.png";
 import ethereumIcon from "../../assets/icons/ethereum.svg";
 import squidIcon from "../../assets/icons/ft33.png";
 import coinIcon from "../../assets/icons/coin.svg";
-import { ethers } from "ethers";
-import { ERC20 } from "@usedapp/core";
-import { useWeb3Context } from "src/hooks";
+import { useTreasuryBalance } from "../TreasuryDashboard/helpers";
 
 interface IStateView {
   app: {
@@ -315,31 +313,3 @@ const InfoText = styled.div`
 `;
 
 export default Auction;
-
-function useTreasuryBalance() {
-  const [treasuryBalance, setTreasuryBalance] = useState<number>();
-
-  const { provider } = useWeb3Context();
-
-  useEffect(() => {
-    if (!provider) return;
-
-    const getTreasuryBalance = async () => {
-      // treasury only really has dai, so hardcoded to it for now
-      const daiContract = new ethers.Contract("0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb", ERC20.abi, provider);
-      const daiBalanceTreasury = await daiContract.balanceOf("0x68d91Bb4b1760Bc131555D23a438585D937A8e6d");
-      const daiBalanceTreasuryFormatted = ethers.utils.formatEther(daiBalanceTreasury);
-      // msig only really has dai, so hardcoded to it for now
-      const daiBalanceMsig = await daiContract.balanceOf("0xBbE6d178d6E11189B46ff4A9f034AB198C2E8A0f");
-      const daiBalanceMsigFormatted = ethers.utils.formatEther(daiBalanceMsig);
-      // ft portfolio value (this is tough, no api)
-      const ftPortfolioValue = 137849.3085;
-      const treasuryBalance = +daiBalanceTreasuryFormatted + +daiBalanceMsigFormatted + ftPortfolioValue;
-      setTreasuryBalance(treasuryBalance);
-    };
-
-    getTreasuryBalance();
-  }, [provider]);
-
-  return treasuryBalance;
-}
