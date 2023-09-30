@@ -204,16 +204,6 @@ function TreasuryDashboard() {
           <Grid item lg={3} md={3} sm={12} xs={12}>
             <Paper className="ohm-card">
               <Typography variant="h6" color="textSecondary">
-                POL Market Value
-              </Typography>
-              <Typography variant="h5">
-                {pol !== undefined ? formatEth(pol.polMarket, 2) : <Skeleton type="text" />}
-              </Typography>
-            </Paper>
-          </Grid>
-          <Grid item lg={3} md={3} sm={12} xs={12}>
-            <Paper className="ohm-card">
-              <Typography variant="h6" color="textSecondary">
                 POL Reserve
               </Typography>
               <Typography variant="h5">
@@ -224,20 +214,30 @@ function TreasuryDashboard() {
           <Grid item lg={3} md={3} sm={12} xs={12}>
             <Paper className="ohm-card">
               <Typography variant="h6" color="textSecondary">
-                Total Market Value
+                Total Reserves Value
               </Typography>
               <Typography variant="h5">
-                {totalReserves !== undefined ? formatEth(totalReserves.totalMarket, 2) : <Skeleton type="text" />}
+                {totalReserves !== undefined ? formatEth(totalReserves.totalReserve, 2) : <Skeleton type="text" />}
               </Typography>
             </Paper>
           </Grid>
           <Grid item lg={3} md={3} sm={12} xs={12}>
             <Paper className="ohm-card">
               <Typography variant="h6" color="textSecondary">
-                Total Reserves Value
+                POL Market Value
               </Typography>
               <Typography variant="h5">
-                {totalReserves !== undefined ? formatEth(totalReserves.totalReserve, 2) : <Skeleton type="text" />}
+                {pol !== undefined ? formatEth(pol.polMarket, 2) : <Skeleton type="text" />}
+              </Typography>
+            </Paper>
+          </Grid>
+          <Grid item lg={3} md={3} sm={12} xs={12}>
+            <Paper className="ohm-card">
+              <Typography variant="h6" color="textSecondary">
+                Total Market Value
+              </Typography>
+              <Typography variant="h5">
+                {totalReserves !== undefined ? formatEth(totalReserves.totalMarket, 2) : <Skeleton type="text" />}
               </Typography>
             </Paper>
           </Grid>
