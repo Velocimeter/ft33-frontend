@@ -197,7 +197,7 @@ function Dashboard() {
               <iframe
                 frameBorder="0"
                 loading="lazy"
-                src="https://dune.com/embeds/3066111/5106261"
+                src="https://dune.com/embeds/3066111/5106265"
                 title="eth earned"
               />
             </div>
