@@ -80,6 +80,8 @@ export function useTreasuryReserves() {
       const daiBalanceTreasury = await daiContract.balanceOf("0x68d91Bb4b1760Bc131555D23a438585D937A8e6d");
       const daiBalanceTreasuryFormatted = ethers.utils.formatEther(daiBalanceTreasury);
 
+      
+
       setTreasuryBalance(+daiBalanceTreasuryFormatted);
     };
 
@@ -105,7 +107,10 @@ export function useMsigReserves() {
       const daiBalanceMsig = await daiContract.balanceOf("0xBbE6d178d6E11189B46ff4A9f034AB198C2E8A0f");
       const daiBalanceMsigFormatted = ethers.utils.formatEther(daiBalanceMsig);
 
-      setTreasuryBalance(+daiBalanceMsigFormatted);
+      const beefyDaiWethHardcoded = 80000;
+      const beefyDaiWethHardcodedFormatted = ethers.utils.formatEther(beefyDaiWethHardcoded); // dont need this?
+
+      setTreasuryBalance(+daiBalanceMsigFormatted + beefyDaiWethHardcoded);
     };
 
     getTreasuryBalance();
@@ -135,10 +140,9 @@ export function useHotWalletReserves() {
       const ethPrice = await getDexScreenerPrice("0x4200000000000000000000000000000000000006", "WETH");
 
       const ethValue = +ethBalanceFormatted * +ethPrice;
-      const beefyDaiWethHardcoded = 80000;
-      const beefyDaiWethHardcodedFormatted = ethers.utils.formatEther(beefyDaiWethHardcoded); // dont need this?
+      
 
-      setTreasuryBalance(+daiBalanceFtWalletFormatted + ethValue + beefyDaiWethHardcoded);
+      setTreasuryBalance(+daiBalanceFtWalletFormatted + ethValue);
     };
 
     getTreasuryBalance();
@@ -173,11 +177,13 @@ export function usePol() {
   const ohmDaiPol = usePolOhmDai();
   const daiWethPol = usePolDaiWeth();
   const bvmWethPol = usePolBvmWeth();
+  const beefyDaiWethHardcoded = 80000;
+  const beefyDaiWethHardcodedFormatted = ethers.utils.formatEther(beefyDaiWethHardcoded); // dont need this?
 
   useEffect(() => {
     if (ohmDaiPol === undefined || daiWethPol === undefined || bvmWethPol === undefined) return;
 
-    const pol = ohmDaiPol + daiWethPol + bvmWethPol;
+    const pol = ohmDaiPol + daiWethPol + bvmWethPol + beefyDaiWethHardcoded;
     setTreasuryBalance(pol);
   }, [bvmWethPol, daiWethPol, ohmDaiPol]);
 
