@@ -187,7 +187,7 @@ function Dashboard() {
               <iframe
                 frameBorder="0"
                 loading="lazy"
-                src="https://dune.com/embeds/3066023/5106144"
+                src="https://dune.com/embeds/3066160/5106359"
                 title="Friend tech holdings in ETH after tax"
               />
             </div>
