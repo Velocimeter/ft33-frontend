@@ -221,9 +221,9 @@ function TreasuryDashboard() {
             </Paper>
           </Grid>
 
-          <Dashboard />
+         
         </Grid>
-
+        <Dashboard />
         {/* <Zoom in={true}> 
           <Grid container spacing={2} className="data-grid">
             <Grid item lg={6} md={6} sm={12} xs={12}>
