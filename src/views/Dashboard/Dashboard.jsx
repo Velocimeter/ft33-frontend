@@ -23,7 +23,7 @@ function Dashboard() {
   return (
     <div id="dashboard-view">
       <Grid container spacing={1} className="top-row-data">
-      <Typography variant="h5" style={{ marginBottom: 20, marginLeft: 20, fontWeight: "bold" }}>
+        <Typography variant="h5" style={{ marginBottom: 20, marginLeft: 20, fontWeight: "bold" }}>
           Dune
         </Typography>
         {/* <Grid item lg={4} md={4} sm={3} xs={5} className="olympus-card">
@@ -186,64 +186,47 @@ function Dashboard() {
             <div className="dune-card">
               <iframe
                 frameBorder="0"
-                loading="lazy"
                 src="https://dune.com/embeds/3066160/5106359"
                 title="Friend tech holdings in ETH after tax"
+                height={500}
               />
             </div>
-          </Grid> 
+          </Grid>
+          <Grid item lg={6} sm={12}>
+            <div className="dune-card">
+              <iframe frameBorder="0" src="https://dune.com/embeds/3066111/5106265" title="eth earned" height={500} />
+            </div>
+          </Grid>
           <Grid item lg={6} sm={12}>
             <div className="dune-card">
               <iframe
                 frameBorder="0"
-                loading="lazy"
-                src="https://dune.com/embeds/3066111/5106265"
-                title="eth earned"
-              />
-            </div>
-          </Grid> 
-          <Grid item lg={6} sm={12}>
-            <div className="dune-card">
-              <iframe
-                frameBorder="0"
-                loading="lazy"
                 src="https://dune.com/embeds/3066114/5106275"
                 title="price + volume"
+                height={500}
               />
             </div>
-          </Grid> 
+          </Grid>
+          <Grid item lg={6} sm={12}>
+            <div className="dune-card">
+              <iframe frameBorder="0" src="https://dune.com/embeds/3066115/5106279" title="MC in ETH" height={500} />
+            </div>
+          </Grid>
           <Grid item lg={6} sm={12}>
             <div className="dune-card">
               <iframe
                 frameBorder="0"
-                loading="lazy"
-                src="https://dune.com/embeds/3066115/5106279"
-                title="MC in ETH"
-              />
-            </div>
-          </Grid> 
-          <Grid item lg={6} sm={12}>
-            <div className="dune-card">
-              <iframe
-                frameBorder="0"
-                loading="lazy"
                 src="https://dune.com/embeds/3066147/5106338"
                 title="holders all time"
+                height={500}
               />
             </div>
-          </Grid> 
+          </Grid>
           <Grid item lg={6} sm={12}>
             <div className="dune-card">
-              <iframe
-                frameBorder="0"
-                loading="lazy"
-                src="https://dune.com/embeds/3066185/5106414"
-                title="keyholders"
-              />
+              <iframe frameBorder="0" src="https://dune.com/embeds/3066185/5106414" title="keyholders" height={500} />
             </div>
-          </Grid> 
-
-          
+          </Grid>
         </Grid>
       </Box>
     </div>
