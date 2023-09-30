@@ -177,6 +177,7 @@ export function usePol() {
   const ohmDaiPol = usePolOhmDai();
   const daiWethPol = usePolDaiWeth();
   const bvmWethPol = usePolBvmWeth();
+  const beefyDaiWethHardcoded = 40000;
   const beefyDaiWethHardcodedFullValue = 87500; // including FT33-FTW in here for now (only FT33 portion not ftw portion)
   const beefyDaiWethHardcodedFormatted = ethers.utils.formatEther(beefyDaiWethHardcoded); // dont need this?
 

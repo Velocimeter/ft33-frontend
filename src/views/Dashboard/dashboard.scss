@@ -43,7 +43,7 @@
     height: auto;
     min-width: 333px;
     max-width: 700px;
-    width: auto;
+    width: 100%;
     flex: auto;
     box-shadow: 0px 2px 28px rgba(0, 0, 0, 0.03);
     background-color: #ffffff0e;
@@ -61,4 +61,21 @@
 .MuiBackdrop-root{
   backdrop-filter: blur(3px) !important;
   -webkit-backdrop-filter: blur(3px) !important;
+}
+.dune-cards {
+  display: grid;
+  width: 100%;
+  // two columns
+  grid-template-columns: repeat(2, 1fr);
+  // gap 20px
+  grid-gap: 20px;
+  iframe {
+    width: 100%;
+    min-height: 300px;
+    box-shadow: 0px 2px 28px rgba(0, 0, 0, 0.03);
+    background-color: #ffffff0e;
+    backdrop-filter: blur(60px);
+    -webkit-backdrop-filter: blur(60px);
+    border-radius: 5px !important;
+  }
 }
