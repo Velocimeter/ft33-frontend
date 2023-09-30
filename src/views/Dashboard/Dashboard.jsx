@@ -80,7 +80,7 @@ function Dashboard() {
 
       <Box className="main-data-area">
         <Grid container spacing={2} className="data-grid">
-          <Grid item lg={4} sm={12}>
+          {/* <Grid item lg={4} sm={12}>
             <div className="dune-card">
               <iframe
                 frameBorder="0"
@@ -177,7 +177,7 @@ function Dashboard() {
                 title="Runway Available"
               />
             </div>
-          </Grid>
+          </Grid> */}
 
           <Grid item lg={6} sm={12}>
             <div className="dune-card">
@@ -188,7 +188,7 @@ function Dashboard() {
                 title="Friend tech holdings in ETH after tax"
               />
             </div>
-          </Grid>
+          </Grid> 
 
           
         </Grid>
