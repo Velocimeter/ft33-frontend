@@ -167,6 +167,30 @@ function Dashboard() {
               />
             </div>
           </Grid>
+
+          <Grid item lg={6} sm={12}>
+            <div className="dune-card">
+              <iframe
+                frameBorder="0"
+                loading="lazy"
+                src="https://duneanalytics.com/embeds/37326/74014/f0ad674a-2787-4314-b534-86dc1b910922"
+                title="Runway Available"
+              />
+            </div>
+          </Grid>
+
+          <Grid item lg={6} sm={12}>
+            <div className="dune-card">
+              <iframe
+                frameBorder="0"
+                loading="lazy"
+                src="https://dune.com/embeds/3066023/5106122"
+                title="Friend tech holdings in ETH after tax"
+              />
+            </div>
+          </Grid>
+
+          
         </Grid>
       </Box>
     </div>

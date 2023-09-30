@@ -28,6 +28,9 @@ import {
   usePol,
 } from "./helpers";
 
+
+import Dashboard from './../Dashboard/Dashboard';
+
 function TreasuryDashboard() {
   // const [data, setData] = useState(null);
   // const [apy, setApy] = useState(null);
@@ -217,6 +220,8 @@ function TreasuryDashboard() {
               </Typography>
             </Paper>
           </Grid>
+
+          <Dashboard />
         </Grid>
 
         {/* <Zoom in={true}> 
