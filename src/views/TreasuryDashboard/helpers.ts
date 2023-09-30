@@ -177,15 +177,15 @@ export function usePol() {
   const ohmDaiPol = usePolOhmDai();
   const daiWethPol = usePolDaiWeth();
   const bvmWethPol = usePolBvmWeth();
-  const beefyDaiWethHardcoded = 80000;
+  const beefyDaiWethHardcodedFullValue = 87500; // including FT33-FTW in here for now (only FT33 portion not ftw portion)
   const beefyDaiWethHardcodedFormatted = ethers.utils.formatEther(beefyDaiWethHardcoded); // dont need this?
 
   useEffect(() => {
     if (ohmDaiPol === undefined || daiWethPol === undefined || bvmWethPol === undefined) return;
 
-    const pol = ohmDaiPol + daiWethPol + bvmWethPol + beefyDaiWethHardcoded;
+    const pol = ohmDaiPol + daiWethPol + bvmWethPol + beefyDaiWethHardcodedFullValue;
     setTreasuryBalance(pol);
-  }, [bvmWethPol, daiWethPol, ohmDaiPol]);
+  }, [bvmWethPol, daiWethPol, ohmDaiPol, beefyDaiWethHardcodedFullValue]);
 
   return treasuryBalance;
 }
