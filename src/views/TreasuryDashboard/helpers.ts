@@ -131,6 +131,7 @@ export function useHotWalletReserves() {
     const getTreasuryBalance = async () => {
       // treasury only really has dai, so hardcoded to it for now
       const daiContract = new ethers.Contract("0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb", ERC20.abi, provider);
+      const wethContract = new ethers.Contract("0x4200000000000000000000000000000000000006", ERC20.abi, provider);
 
       // ft wallet dai balance
       const daiBalanceFtWallet = await daiContract.balanceOf("0x1a6c20D8DDAf118F4d96BB074Fa5170b667399cC");
@@ -138,11 +139,16 @@ export function useHotWalletReserves() {
 
       const ethBalance = await provider.getBalance("0x1a6c20D8DDAf118F4d96BB074Fa5170b667399cC");
       const ethBalanceFormatted = ethers.utils.formatEther(ethBalance);
+
+      const wethBalanceMsig = await wethContract.balanceOf("0xBbE6d178d6E11189B46ff4A9f034AB198C2E8A0f");
+      const wethBalanceMsigFormatted = ethers.utils.formatEther(wethBalanceMsig);
+
       const ethPrice = await getDexScreenerPrice("0x4200000000000000000000000000000000000006", "WETH");
 
       const ethValue = +ethBalanceFormatted * +ethPrice;
+      const wethValue = +wethBalanceMsigFormatted * +ethPrice;
 
-      setTreasuryBalance(+daiBalanceFtWalletFormatted + ethValue);
+      setTreasuryBalance(+daiBalanceFtWalletFormatted + ethValue + wethValue);
     };
 
     getTreasuryBalance();
