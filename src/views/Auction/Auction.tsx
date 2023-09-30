@@ -114,7 +114,7 @@ const Auction: React.FC = () => {
           </Text1>
           {/*<BuySquid />*/}
           <Stats
-            treasuryBalance={treasuryBalance}
+            treasuryBalance={treasuryBalance?.totalReserve}
             stakingAPY={stakingAPY}
             // tvl={tvl}
           />

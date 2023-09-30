@@ -60,7 +60,7 @@ export function useBackingPerOhm() {
   const totalReserves = useTotalReserves();
 
   const backingPerOhm =
-    circSupply !== undefined && totalReserves !== undefined ? totalReserves / circSupply : undefined;
+    circSupply !== undefined && totalReserves !== undefined ? totalReserves.totalReserve / circSupply : undefined;
 
   return backingPerOhm;
 }
@@ -79,8 +79,6 @@ export function useTreasuryReserves() {
 
       const daiBalanceTreasury = await daiContract.balanceOf("0x68d91Bb4b1760Bc131555D23a438585D937A8e6d");
       const daiBalanceTreasuryFormatted = ethers.utils.formatEther(daiBalanceTreasury);
-
-      
 
       setTreasuryBalance(+daiBalanceTreasuryFormatted);
     };
@@ -107,10 +105,7 @@ export function useMsigReserves() {
       const daiBalanceMsig = await daiContract.balanceOf("0xBbE6d178d6E11189B46ff4A9f034AB198C2E8A0f");
       const daiBalanceMsigFormatted = ethers.utils.formatEther(daiBalanceMsig);
 
-      const beefyDaiWethHardcoded = 40000;
-      const beefyDaiWethHardcodedFormatted = ethers.utils.formatEther(beefyDaiWethHardcoded); // dont need this?
-
-      setTreasuryBalance(+daiBalanceMsigFormatted + beefyDaiWethHardcoded);
+      setTreasuryBalance(+daiBalanceMsigFormatted);
     };
 
     getTreasuryBalance();
@@ -140,7 +135,6 @@ export function useHotWalletReserves() {
       const ethPrice = await getDexScreenerPrice("0x4200000000000000000000000000000000000006", "WETH");
 
       const ethValue = +ethBalanceFormatted * +ethPrice;
-      
 
       setTreasuryBalance(+daiBalanceFtWalletFormatted + ethValue);
     };
@@ -172,27 +166,29 @@ export function useFtKeysValue() {
 }
 
 export function usePol() {
-  const [treasuryBalance, setTreasuryBalance] = useState<number>();
+  const [treasuryBalance, setTreasuryBalance] = useState<{ polMarket: number; polReserve: number }>();
 
-  const ohmDaiPol = usePolOhmDai();
+  const ftwDaiPol = usePolFtwDai();
   const daiWethPol = usePolDaiWeth();
   const bvmWethPol = usePolBvmWeth();
-  const beefyDaiWethHardcoded = 40000;
-  const beefyDaiWethHardcodedFullValue = 87500; // including FT33-FTW in here for now (only FT33 portion not ftw portion)
-  const beefyDaiWethHardcodedFormatted = ethers.utils.formatEther(beefyDaiWethHardcoded); // dont need this?
+  const ftwFt33Pol = {
+    ftwFt33PolMarket: 14560,
+    ftwFt33PolReserve: 7280,
+  };
 
   useEffect(() => {
-    if (ohmDaiPol === undefined || daiWethPol === undefined || bvmWethPol === undefined) return;
+    if (ftwDaiPol?.ftwDaiPolMarket === undefined || daiWethPol === undefined || bvmWethPol === undefined) return;
 
-    const pol = ohmDaiPol + daiWethPol + bvmWethPol + beefyDaiWethHardcodedFullValue;
-    setTreasuryBalance(pol);
-  }, [bvmWethPol, daiWethPol, ohmDaiPol, beefyDaiWethHardcodedFullValue]);
+    const polMarket = ftwDaiPol?.ftwDaiPolMarket + daiWethPol + bvmWethPol + ftwFt33Pol.ftwFt33PolMarket;
+    const polReserve = ftwDaiPol?.ftwDaiPolReserve + daiWethPol + bvmWethPol + ftwFt33Pol.ftwFt33PolReserve;
+    setTreasuryBalance({ polMarket, polReserve });
+  }, [bvmWethPol, daiWethPol, ftwDaiPol, ftwFt33Pol.ftwFt33PolMarket, ftwFt33Pol.ftwFt33PolReserve]);
 
   return treasuryBalance;
 }
 
-export function usePolOhmDai() {
-  const [treasuryBalance, setTreasuryBalance] = useState<number>();
+export function usePolFtwDai() {
+  const [treasuryBalance, setTreasuryBalance] = useState<{ ftwDaiPolMarket: number; ftwDaiPolReserve: number }>();
 
   const { provider } = useWeb3Context();
 
@@ -242,11 +238,20 @@ export function usePolOhmDai() {
         ethers.utils.parseUnits("1", 9),
         "0x3347453ced85bd288d783d85cdec9b01ab90f9d8",
       );
-      const lpValue =
-        +ethers.utils.formatUnits(amountsOut[0], 9) * +ethers.utils.formatUnits(ftwPrice, 18) +
-        +ethers.utils.formatUnits(amountsOut[1], 18);
 
-      setTreasuryBalance(lpValue);
+      const beefyFtwDaiHardcoded = 80000;
+
+      const lpMarket =
+        +ethers.utils.formatUnits(amountsOut[0], 9) * +ethers.utils.formatUnits(ftwPrice, 18) +
+        +ethers.utils.formatUnits(amountsOut[1], 18) +
+        beefyFtwDaiHardcoded;
+
+      const lpReserve = +ethers.utils.formatUnits(amountsOut[1], 18) + beefyFtwDaiHardcoded / 2;
+
+      setTreasuryBalance({
+        ftwDaiPolMarket: lpMarket,
+        ftwDaiPolReserve: lpReserve,
+      });
     };
 
     getTreasuryBalance();
@@ -379,7 +384,7 @@ export function usePolBvmWeth() {
 }
 
 export function useTotalReserves() {
-  const [treasuryBalance, setTreasuryBalance] = useState<number>();
+  const [treasuryBalance, setTreasuryBalance] = useState<{ totalMarket: number; totalReserve: number }>();
 
   const pol = usePol();
   const ftKeysValue = useFtKeysValue();
@@ -389,15 +394,16 @@ export function useTotalReserves() {
 
   useEffect(() => {
     if (
-      pol === undefined ||
+      pol?.polReserve === undefined ||
       ftKeysValue === undefined ||
       hotWalletReserves === undefined ||
       msigReserves === undefined ||
       treasuryReserves === undefined
     )
       return;
-    const total = pol + ftKeysValue + hotWalletReserves + msigReserves + treasuryReserves;
-    setTreasuryBalance(total);
+    const totalReserve = pol?.polReserve + ftKeysValue + hotWalletReserves + msigReserves + treasuryReserves;
+    const totalMarket = pol?.polMarket + ftKeysValue + hotWalletReserves + msigReserves + treasuryReserves;
+    setTreasuryBalance({ totalMarket, totalReserve });
   }, [ftKeysValue, hotWalletReserves, msigReserves, pol, treasuryReserves]);
 
   return treasuryBalance;
