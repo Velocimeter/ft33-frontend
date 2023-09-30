@@ -100,12 +100,18 @@ export function useMsigReserves() {
     const getTreasuryBalance = async () => {
       // treasury only really has dai, so hardcoded to it for now
       const daiContract = new ethers.Contract("0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb", ERC20.abi, provider);
+      const wethContract = new ethers.Contract("0x4200000000000000000000000000000000000006", ERC20.abi, provider);
 
       // msig only really has dai, so hardcoded to it for now
       const daiBalanceMsig = await daiContract.balanceOf("0xBbE6d178d6E11189B46ff4A9f034AB198C2E8A0f");
       const daiBalanceMsigFormatted = ethers.utils.formatEther(daiBalanceMsig);
 
-      setTreasuryBalance(+daiBalanceMsigFormatted);
+      const wethBalanceMsig = await wethContract.balanceOf("0xBbE6d178d6E11189B46ff4A9f034AB198C2E8A0f");
+      const wethBalanceMsigFormatted = ethers.utils.formatEther(wethBalanceMsig);
+
+      const wethPrice = await getDexScreenerPrice("0x4200000000000000000000000000000000000006", "WETH");
+
+      setTreasuryBalance(+daiBalanceMsigFormatted + +wethBalanceMsigFormatted * wethPrice);
     };
 
     getTreasuryBalance();
