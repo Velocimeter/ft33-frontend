@@ -135,8 +135,10 @@ export function useHotWalletReserves() {
       const ethPrice = await getDexScreenerPrice("0x4200000000000000000000000000000000000006", "WETH");
 
       const ethValue = +ethBalanceFormatted * +ethPrice;
+      const beefyDaiWethHardcoded = 80000;
+      const beefyDaiWethHardcodedFormatted = ethers.utils.formatEther(beefyDaiWethHardcoded); // dont need this?
 
-      setTreasuryBalance(+daiBalanceFtWalletFormatted + ethValue);
+      setTreasuryBalance(+daiBalanceFtWalletFormatted + ethValue + beefyDaiWethHardcoded);
     };
 
     getTreasuryBalance();
