@@ -23,6 +23,9 @@ function Dashboard() {
   return (
     <div id="dashboard-view">
       <Grid container spacing={1} className="top-row-data">
+      <Typography variant="h5" style={{ marginBottom: 20, fontWeight: "bold" }}>
+          Dune
+        </Typography>
         {/* <Grid item lg={4} md={4} sm={3} xs={5} className="olympus-card">
           <Zoom in={true}>
             <Paper className="ohm-card">
