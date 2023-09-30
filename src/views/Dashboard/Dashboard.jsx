@@ -202,6 +202,16 @@ function Dashboard() {
               />
             </div>
           </Grid> 
+          <Grid item lg={6} sm={12}>
+            <div className="dune-card">
+              <iframe
+                frameBorder="0"
+                loading="lazy"
+                src="https://dune.com/embeds/3066114/5106275"
+                title="price + volume"
+              />
+            </div>
+          </Grid> 
 
           
         </Grid>
