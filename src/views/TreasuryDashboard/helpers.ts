@@ -107,7 +107,7 @@ export function useMsigReserves() {
       const daiBalanceMsig = await daiContract.balanceOf("0xBbE6d178d6E11189B46ff4A9f034AB198C2E8A0f");
       const daiBalanceMsigFormatted = ethers.utils.formatEther(daiBalanceMsig);
 
-      const beefyDaiWethHardcoded = 80000;
+      const beefyDaiWethHardcoded = 40000;
       const beefyDaiWethHardcodedFormatted = ethers.utils.formatEther(beefyDaiWethHardcoded); // dont need this?
 
       setTreasuryBalance(+daiBalanceMsigFormatted + beefyDaiWethHardcoded);
