@@ -217,8 +217,18 @@ function Dashboard() {
               <iframe
                 frameBorder="0"
                 loading="lazy"
-                src=""
+                src="https://dune.com/embeds/3066115/5106279"
                 title="MC in ETH"
+              />
+            </div>
+          </Grid> 
+          <Grid item lg={6} sm={12}>
+            <div className="dune-card">
+              <iframe
+                frameBorder="0"
+                loading="lazy"
+                src="https://dune.com/embeds/3066147/5106338"
+                title="holders all time"
               />
             </div>
           </Grid> 
