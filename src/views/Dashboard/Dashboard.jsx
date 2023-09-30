@@ -232,6 +232,16 @@ function Dashboard() {
               />
             </div>
           </Grid> 
+          <Grid item lg={6} sm={12}>
+            <div className="dune-card">
+              <iframe
+                frameBorder="0"
+                loading="lazy"
+                src="https://dune.com/embeds/3066185/5106414"
+                title="keyholders"
+              />
+            </div>
+          </Grid> 
 
           
         </Grid>
