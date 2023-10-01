@@ -82,7 +82,7 @@ export const ftw_dai_lp = new LPBond({
   reserveContract: ReserveOhmDaiContract,
   networkAddrs: {
     [NetworkID.Base]: {
-      bondAddress: "0x0bec648ccde8a30a2650f622e8de3a4e94d456dc",
+      bondAddress: "0xa42c7dc56ec2af5e7ede6df90482c575580b39ab",
       reserveAddress: "0x7b809866eaa8137d902f83bf7cbe77b41d0df70c", // lp tokens
     }
   },
