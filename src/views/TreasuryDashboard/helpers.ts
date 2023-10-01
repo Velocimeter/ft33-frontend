@@ -140,13 +140,13 @@ export function useHotWalletReserves() {
       const ethBalance = await provider.getBalance("0x1a6c20D8DDAf118F4d96BB074Fa5170b667399cC");
       const ethBalanceFormatted = ethers.utils.formatEther(ethBalance);
 
-      const wethBalanceMsig = await wethContract.balanceOf("0xBbE6d178d6E11189B46ff4A9f034AB198C2E8A0f");
-      const wethBalanceMsigFormatted = ethers.utils.formatEther(wethBalanceMsig);
+      const wethBalanceFtWallet = await wethContract.balanceOf("0x1a6c20d8ddaf118f4d96bb074fa5170b667399cc");
+      const wethBalanceFtWalletFormatted = ethers.utils.formatEther(wethBalanceFtWallet);
 
       const ethPrice = await getDexScreenerPrice("0x4200000000000000000000000000000000000006", "WETH");
 
       const ethValue = +ethBalanceFormatted * +ethPrice;
-      const wethValue = +wethBalanceMsigFormatted * +ethPrice;
+      const wethValue = +wethBalanceFtWalletFormatted * +ethPrice;
 
       setTreasuryBalance(+daiBalanceFtWalletFormatted + ethValue + wethValue);
     };
