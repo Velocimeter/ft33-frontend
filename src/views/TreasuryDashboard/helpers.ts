@@ -74,13 +74,40 @@ export function useTreasuryReserves() {
     if (!provider) return;
 
     const getTreasuryBalance = async () => {
-      // treasury only really has dai, so hardcoded to it for now
+      // ftw_dai lp reserve
+      const ftw_dai_address = "0x7B809866EAA8137D902f83bF7CbE77B41D0Df70c";
+      const router_address = "0xE11b93B61f6291d35c5a2beA0A9fF169080160cF";
+      const pairContract = new ethers.Contract(
+        ftw_dai_address,
+        [
+          "function getAmountOut(uint amountIn, address tokenIn) external view returns (uint)",
+          "function balanceOf(address owner) view returns (uint balance)",
+        ],
+        provider,
+      );
+      const routerContract = new ethers.Contract(
+        router_address,
+        [
+          "function quoteRemoveLiquidity(address tokenA, address tokenB, bool stable, uint liquidity) external view returns (uint amountA, uint amountB)",
+        ],
+        provider,
+      );
+      const ftwDaiBalanceTreasury = await pairContract.balanceOf("0x68d91Bb4b1760Bc131555D23a438585D937A8e6d");
+      const amountsOut = await routerContract.quoteRemoveLiquidity(
+        "0x3347453ced85bd288d783d85cdec9b01ab90f9d8",
+        "0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb",
+        false,
+        ftwDaiBalanceTreasury,
+      );
+      const ftwDaiReserve = +ethers.utils.formatUnits(amountsOut[1], 18);
+
+      // dai reserve
       const daiContract = new ethers.Contract("0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb", ERC20.abi, provider);
 
       const daiBalanceTreasury = await daiContract.balanceOf("0x68d91Bb4b1760Bc131555D23a438585D937A8e6d");
       const daiBalanceTreasuryFormatted = ethers.utils.formatEther(daiBalanceTreasury);
 
-      setTreasuryBalance(+daiBalanceTreasuryFormatted);
+      setTreasuryBalance(+daiBalanceTreasuryFormatted + ftwDaiReserve);
     };
 
     getTreasuryBalance();
@@ -209,12 +236,12 @@ export function usePolFtwDai() {
 
     const getTreasuryBalance = async () => {
       // lp value
-      const ohm_dai_address = "0x7B809866EAA8137D902f83bF7CbE77B41D0Df70c";
+      const ftw_dai_address = "0x7B809866EAA8137D902f83bF7CbE77B41D0Df70c";
       const gauge_address = "0x108ef56f5146a060c847bb1a7755beb24eec4bd8";
       const router_address = "0xE11b93B61f6291d35c5a2beA0A9fF169080160cF";
 
       const pairContract = new ethers.Contract(
-        ohm_dai_address,
+        ftw_dai_address,
         [
           "function getAmountOut(uint amountIn, address tokenIn) external view returns (uint)",
           "function balanceOf(address owner) view returns (uint balance)",
@@ -282,12 +309,12 @@ export function usePolDaiWeth() {
 
     const getTreasuryBalance = async () => {
       // lp value
-      const ohm_dai_address = "0xd511ce52d24656FA76cb080a0647CfeF93BB976e";
+      const ftw_dai_address = "0xd511ce52d24656FA76cb080a0647CfeF93BB976e";
       const gauge_address = "0xb5e6163a8d4398f98800b173813c24f342a518c4";
       const router_address = "0xE11b93B61f6291d35c5a2beA0A9fF169080160cF";
 
       const pairContract = new ethers.Contract(
-        ohm_dai_address,
+        ftw_dai_address,
         [
           "function getAmountOut(uint amountIn, address tokenIn) external view returns (uint)",
           "function balanceOf(address owner) view returns (uint balance)",

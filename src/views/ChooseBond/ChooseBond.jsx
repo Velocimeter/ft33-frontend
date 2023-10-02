@@ -20,6 +20,7 @@ import { Skeleton } from "@material-ui/lab";
 import ClaimBonds from "./ClaimBonds";
 import isEmpty from "lodash/isEmpty";
 import { allBondsMap } from "src/helpers/AllBonds";
+import { useTreasuryReserves } from "../TreasuryDashboard/helpers";
 
 function ChooseBond() {
   const { bonds } = useBonds();
@@ -44,17 +45,7 @@ function ChooseBond() {
     return state.app.marketPrice;
   });
 
-  const treasuryBalance = useSelector(state => {
-    if (state.bonding.loading == false) {
-      let tokenBalances = 0;
-      for (const bond in allBondsMap) {
-        if (allBondsMap[bond].active && state.bonding[bond]) {
-          tokenBalances += state.bonding[bond].purchased;
-        }
-      }
-      return tokenBalances;
-    }
-  });
+  const treasuryBalance = useTreasuryReserves();
 
   return (
     <div id="choose-bond-view">
@@ -71,7 +62,7 @@ function ChooseBond() {
                   Treasury Balance
                 </Typography>
                 <Typography variant="h4">
-                  {isAppLoading ? <Skeleton width="180px" /> : formatEth(treasuryBalance)}
+                  {treasuryBalance === undefined ? <Skeleton width="180px" /> : formatEth(treasuryBalance)}
                 </Typography>
               </Box>
             </Paper>
