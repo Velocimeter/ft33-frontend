@@ -26,6 +26,7 @@ import {
   useTreasuryReserves,
   useTotalReserves,
   usePol,
+  useMarketPrice,
 } from "./helpers";
 
 import Dashboard from "./../Dashboard/Dashboard";
@@ -61,6 +62,7 @@ function TreasuryDashboard() {
   // const backingPerOhm = useSelector(state => {
   //   return state.app.treasuryMarketValue / state.app.circSupply;
   // });
+  const marketPrice = useMarketPrice();
   const backingPerOhm = useBackingPerOhm();
   const totalReserves = useTotalReserves();
   const pol = usePol();
@@ -143,6 +145,16 @@ function TreasuryDashboard() {
               </Typography>
               <Typography variant="h5">
                 {backingPerOhm !== undefined ? formatEth(backingPerOhm, 2) : <Skeleton type="text" />}
+              </Typography>
+            </Paper>
+          </Grid>
+          <Grid item lg={3} md={3} sm={12} xs={12}>
+            <Paper className="ohm-card">
+              <Typography variant="h6" color="textSecondary">
+                FTW Market Price
+              </Typography>
+              <Typography variant="h5">
+                {marketPrice !== undefined ? formatEth(marketPrice, 2) : <Skeleton type="text" />}
               </Typography>
             </Paper>
           </Grid>
