@@ -5,17 +5,31 @@ import { getDexScreenerPrice } from "src/helpers";
 import { useWeb3Context } from "src/hooks";
 import { Weather } from "./ftResponse";
 
-export function useMarketPrice() {
+const BVM_ADDRESS = "0xd386a121991e51eab5e3433bf5b1cf4c8884b47a";
+const FTW_ADDRESS = "0x3347453ced85bd288d783d85cdec9b01ab90f9d8";
+const DAI_ADDRESS = "0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb";
+const WETH_ADDRESS = "0x4200000000000000000000000000000000000006";
+const FTW_DAI_ADDRESS = "0x7B809866EAA8137D902f83bF7CbE77B41D0Df70c";
+const FTW_DAI_GAUGE_ADDRESS = "0x108ef56f5146a060c847bb1a7755beb24eec4bd8";
+const BVM_WETH_ADDRESS = "0x53713F956A4DA3F08B55A390B20657eDF9E0897B";
+const BVM_WETH_GAUGE_ADDRESS = "0x3f5129112754d4fbe7ab228c2d5e312b2bc79a06";
+const MSIG_ADDRESS = "0xBbE6d178d6E11189B46ff4A9f034AB198C2E8A0f";
+const HOT_WALLET_ADDRESS = "0x1a6c20D8DDAf118F4d96BB074Fa5170b667399cC";
+const TRASURY_ADDRESS = "0x68d91Bb4b1760Bc131555D23a438585D937A8e6d";
+const ROUTER_ADDRESS = "0xE11b93B61f6291d35c5a2beA0A9fF169080160cF";
+const STAKING_ADDRESS = "0x6f82d82e6fecb6d0daf08b8ffd9772d596582f4a";
+
+export function useMarketPrice(tokenAddress = FTW_ADDRESS, tokenSymbol = "FTW") {
   const [marketPrice, setMarketPrice] = useState<number>();
 
   useEffect(() => {
     async function getMarketPrice() {
-      const stableCoinPriceOfFtw = await getDexScreenerPrice("0x3347453ced85bd288d783d85cdec9b01ab90f9d8", "FTW");
+      const stableCoinPriceOfFtw = await getDexScreenerPrice(tokenAddress, tokenSymbol);
       setMarketPrice(stableCoinPriceOfFtw);
     }
 
     getMarketPrice();
-  }, []);
+  }, [tokenAddress, tokenSymbol]);
 
   return marketPrice;
 }
@@ -29,7 +43,7 @@ export function useCircSupply() {
     async function getCircSupply() {
       if (!provider) return;
 
-      const ftwContract = new ethers.Contract("0x3347453Ced85bd288D783d85cDEC9b01Ab90f9D8", ERC20.abi, provider);
+      const ftwContract = new ethers.Contract(FTW_ADDRESS, ERC20.abi, provider);
       const ftwCircSupply = await ftwContract.totalSupply();
       const ftwCircSupplyFormatted = ethers.utils.formatUnits(ftwCircSupply, 9);
       setCircSupply(+ftwCircSupplyFormatted);
@@ -42,16 +56,10 @@ export function useCircSupply() {
 }
 
 export function useMarketCap() {
-  const [marketCap, setMarketCap] = useState<number>();
   const marketPrice = useMarketPrice();
   const circSupply = useCircSupply();
 
-  useEffect(() => {
-    if (marketPrice === undefined || circSupply === undefined) return;
-
-    const marketCap = marketPrice * circSupply;
-    setMarketCap(marketCap);
-  }, [marketPrice, circSupply]);
+  const marketCap = marketPrice !== undefined && circSupply !== undefined ? marketPrice * circSupply : undefined;
 
   return marketCap;
 }
@@ -76,10 +84,8 @@ export function useTreasuryReserves() {
 
     const getTreasuryBalance = async () => {
       // ftw_dai lp reserve
-      const ftw_dai_address = "0x7B809866EAA8137D902f83bF7CbE77B41D0Df70c";
-      const router_address = "0xE11b93B61f6291d35c5a2beA0A9fF169080160cF";
       const pairContract = new ethers.Contract(
-        ftw_dai_address,
+        FTW_DAI_ADDRESS,
         [
           "function getAmountOut(uint amountIn, address tokenIn) external view returns (uint)",
           "function balanceOf(address owner) view returns (uint balance)",
@@ -87,25 +93,25 @@ export function useTreasuryReserves() {
         provider,
       );
       const routerContract = new ethers.Contract(
-        router_address,
+        ROUTER_ADDRESS,
         [
           "function quoteRemoveLiquidity(address tokenA, address tokenB, bool stable, uint liquidity) external view returns (uint amountA, uint amountB)",
         ],
         provider,
       );
-      const ftwDaiBalanceTreasury = await pairContract.balanceOf("0x68d91Bb4b1760Bc131555D23a438585D937A8e6d");
+      const ftwDaiBalanceTreasury = await pairContract.balanceOf(TRASURY_ADDRESS);
       const amountsOut = await routerContract.quoteRemoveLiquidity(
-        "0x3347453ced85bd288d783d85cdec9b01ab90f9d8",
-        "0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb",
+        FTW_ADDRESS,
+        DAI_ADDRESS,
         false,
         ftwDaiBalanceTreasury,
       );
       const ftwDaiReserve = +ethers.utils.formatUnits(amountsOut[1], 18);
 
       // dai reserve
-      const daiContract = new ethers.Contract("0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb", ERC20.abi, provider);
+      const daiContract = new ethers.Contract(DAI_ADDRESS, ERC20.abi, provider);
 
-      const daiBalanceTreasury = await daiContract.balanceOf("0x68d91Bb4b1760Bc131555D23a438585D937A8e6d");
+      const daiBalanceTreasury = await daiContract.balanceOf(TRASURY_ADDRESS);
       const daiBalanceTreasuryFormatted = ethers.utils.formatEther(daiBalanceTreasury);
 
       setTreasuryBalance(+daiBalanceTreasuryFormatted + ftwDaiReserve);
@@ -122,28 +128,28 @@ export function useMsigReserves() {
 
   const { provider } = useWeb3Context();
 
+  const wethPrice = useMarketPrice(WETH_ADDRESS, "WETH");
+
   useEffect(() => {
-    if (!provider) return;
+    if (!provider || wethPrice === undefined) return;
 
     const getTreasuryBalance = async () => {
       // treasury only really has dai, so hardcoded to it for now
-      const daiContract = new ethers.Contract("0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb", ERC20.abi, provider);
-      const wethContract = new ethers.Contract("0x4200000000000000000000000000000000000006", ERC20.abi, provider);
+      const daiContract = new ethers.Contract(DAI_ADDRESS, ERC20.abi, provider);
+      const wethContract = new ethers.Contract(WETH_ADDRESS, ERC20.abi, provider);
 
       // msig only really has dai, so hardcoded to it for now
-      const daiBalanceMsig = await daiContract.balanceOf("0xBbE6d178d6E11189B46ff4A9f034AB198C2E8A0f");
+      const daiBalanceMsig = await daiContract.balanceOf(MSIG_ADDRESS);
       const daiBalanceMsigFormatted = ethers.utils.formatEther(daiBalanceMsig);
 
-      const wethBalanceMsig = await wethContract.balanceOf("0xBbE6d178d6E11189B46ff4A9f034AB198C2E8A0f");
+      const wethBalanceMsig = await wethContract.balanceOf(MSIG_ADDRESS);
       const wethBalanceMsigFormatted = ethers.utils.formatEther(wethBalanceMsig);
-
-      const wethPrice = await getDexScreenerPrice("0x4200000000000000000000000000000000000006", "WETH");
 
       setTreasuryBalance(+daiBalanceMsigFormatted + +wethBalanceMsigFormatted * wethPrice);
     };
 
     getTreasuryBalance();
-  }, [provider]);
+  }, [provider, wethPrice]);
 
   return treasuryBalance;
 }
@@ -153,34 +159,34 @@ export function useHotWalletReserves() {
 
   const { provider } = useWeb3Context();
 
+  const wethPrice = useMarketPrice(WETH_ADDRESS, "WETH");
+
   useEffect(() => {
-    if (!provider) return;
+    if (!provider || wethPrice === undefined) return;
 
     const getTreasuryBalance = async () => {
       // treasury only really has dai, so hardcoded to it for now
-      const daiContract = new ethers.Contract("0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb", ERC20.abi, provider);
-      const wethContract = new ethers.Contract("0x4200000000000000000000000000000000000006", ERC20.abi, provider);
+      const daiContract = new ethers.Contract(DAI_ADDRESS, ERC20.abi, provider);
+      const wethContract = new ethers.Contract(WETH_ADDRESS, ERC20.abi, provider);
 
       // ft wallet dai balance
-      const daiBalanceFtWallet = await daiContract.balanceOf("0x1a6c20D8DDAf118F4d96BB074Fa5170b667399cC");
+      const daiBalanceFtWallet = await daiContract.balanceOf(HOT_WALLET_ADDRESS);
       const daiBalanceFtWalletFormatted = ethers.utils.formatEther(daiBalanceFtWallet);
 
-      const ethBalance = await provider.getBalance("0x1a6c20D8DDAf118F4d96BB074Fa5170b667399cC");
+      const ethBalance = await provider.getBalance(HOT_WALLET_ADDRESS);
       const ethBalanceFormatted = ethers.utils.formatEther(ethBalance);
 
-      const wethBalanceFtWallet = await wethContract.balanceOf("0x1a6c20d8ddaf118f4d96bb074fa5170b667399cc");
+      const wethBalanceFtWallet = await wethContract.balanceOf(HOT_WALLET_ADDRESS);
       const wethBalanceFtWalletFormatted = ethers.utils.formatEther(wethBalanceFtWallet);
 
-      const ethPrice = await getDexScreenerPrice("0x4200000000000000000000000000000000000006", "WETH");
-
-      const ethValue = +ethBalanceFormatted * +ethPrice;
-      const wethValue = +wethBalanceFtWalletFormatted * +ethPrice;
+      const ethValue = +ethBalanceFormatted * wethPrice;
+      const wethValue = +wethBalanceFtWalletFormatted * wethPrice;
 
       setTreasuryBalance(+daiBalanceFtWalletFormatted + ethValue + wethValue);
     };
 
     getTreasuryBalance();
-  }, [provider]);
+  }, [provider, wethPrice]);
 
   return treasuryBalance;
 }
@@ -189,23 +195,23 @@ export function useFtKeysValue() {
 
   const { provider } = useWeb3Context();
 
+  const wethPrice = useMarketPrice(WETH_ADDRESS, "WETH");
+
   useEffect(() => {
-    if (!provider) return;
+    if (!provider || wethPrice === undefined) return;
 
     const getTreasuryBalance = async () => {
       const res = await fetch("https://preview.frenfren.pro/api/users/0x1a6c20D8DDAf118F4d96BB074Fa5170b667399cC");
       const data = (await res.json()) as Weather;
       const ftPortfolioEth = data.portfolio.value;
 
-      const ethPrice = await getDexScreenerPrice("0x4200000000000000000000000000000000000006", "WETH");
-
-      const ftPortfolioValue = ftPortfolioEth * ethPrice;
+      const ftPortfolioValue = ftPortfolioEth * wethPrice;
 
       setTreasuryBalance(ftPortfolioValue);
     };
 
     getTreasuryBalance();
-  }, [provider]);
+  }, [provider, wethPrice]);
 
   return treasuryBalance;
 }
@@ -237,17 +243,15 @@ export function usePolFtwDai() {
 
   const { provider } = useWeb3Context();
 
+  const ftwPrice = useMarketPrice();
+
   useEffect(() => {
-    if (!provider) return;
+    if (!provider || ftwPrice === undefined) return;
 
     const getTreasuryBalance = async () => {
       // lp value
-      const ftw_dai_address = "0x7B809866EAA8137D902f83bF7CbE77B41D0Df70c";
-      const gauge_address = "0x108ef56f5146a060c847bb1a7755beb24eec4bd8";
-      const router_address = "0xE11b93B61f6291d35c5a2beA0A9fF169080160cF";
-
       const pairContract = new ethers.Contract(
-        ftw_dai_address,
+        FTW_DAI_ADDRESS,
         [
           "function getAmountOut(uint amountIn, address tokenIn) external view returns (uint)",
           "function balanceOf(address owner) view returns (uint balance)",
@@ -255,39 +259,29 @@ export function usePolFtwDai() {
         provider,
       );
       const gaugeContract = new ethers.Contract(
-        gauge_address,
+        FTW_DAI_GAUGE_ADDRESS,
         ["function balanceOf(address owner) view returns (uint balance)"],
         provider,
       );
       const routerContract = new ethers.Contract(
-        router_address,
+        ROUTER_ADDRESS,
         [
           "function quoteRemoveLiquidity(address tokenA, address tokenB, bool stable, uint liquidity) external view returns (uint amountA, uint amountB)",
         ],
         provider,
       );
 
-      const lpBalanceMsigInGauge = await gaugeContract.balanceOf("0xBbE6d178d6E11189B46ff4A9f034AB198C2E8A0f");
-      const lpBalanceMsigInWallet = await pairContract.balanceOf("0xBbE6d178d6E11189B46ff4A9f034AB198C2E8A0f");
+      const lpBalanceMsigInGauge = await gaugeContract.balanceOf(MSIG_ADDRESS);
+      const lpBalanceMsigInWallet = await pairContract.balanceOf(MSIG_ADDRESS);
 
       const lpBalanceMsig = lpBalanceMsigInGauge.add(lpBalanceMsigInWallet);
 
-      const amountsOut = await routerContract.quoteRemoveLiquidity(
-        "0x3347453ced85bd288d783d85cdec9b01ab90f9d8",
-        "0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb",
-        false,
-        lpBalanceMsig,
-      );
-
-      const ftwPrice = await pairContract.getAmountOut(
-        ethers.utils.parseUnits("1", 9),
-        "0x3347453ced85bd288d783d85cdec9b01ab90f9d8",
-      );
+      const amountsOut = await routerContract.quoteRemoveLiquidity(FTW_ADDRESS, DAI_ADDRESS, false, lpBalanceMsig);
 
       const beefyFtwDaiHardcoded = 80000;
 
       const lpMarket =
-        +ethers.utils.formatUnits(amountsOut[0], 9) * +ethers.utils.formatUnits(ftwPrice, 18) +
+        +ethers.utils.formatUnits(amountsOut[0], 9) * ftwPrice +
         +ethers.utils.formatUnits(amountsOut[1], 18) +
         beefyFtwDaiHardcoded;
 
@@ -300,7 +294,7 @@ export function usePolFtwDai() {
     };
 
     getTreasuryBalance();
-  }, [provider]);
+  }, [ftwPrice, provider]);
 
   return treasuryBalance;
 }
@@ -310,17 +304,15 @@ export function usePolDaiWeth() {
 
   const { provider } = useWeb3Context();
 
+  const wethPrice = useMarketPrice(WETH_ADDRESS, "WETH");
+
   useEffect(() => {
-    if (!provider) return;
+    if (!provider || wethPrice === undefined) return;
 
     const getTreasuryBalance = async () => {
       // lp value
-      const ftw_dai_address = "0xd511ce52d24656FA76cb080a0647CfeF93BB976e";
-      const gauge_address = "0xb5e6163a8d4398f98800b173813c24f342a518c4";
-      const router_address = "0xE11b93B61f6291d35c5a2beA0A9fF169080160cF";
-
       const pairContract = new ethers.Contract(
-        ftw_dai_address,
+        FTW_DAI_ADDRESS,
         [
           "function getAmountOut(uint amountIn, address tokenIn) external view returns (uint)",
           "function balanceOf(address owner) view returns (uint balance)",
@@ -328,31 +320,25 @@ export function usePolDaiWeth() {
         provider,
       );
       const gaugeContract = new ethers.Contract(
-        gauge_address,
+        FTW_DAI_GAUGE_ADDRESS,
         ["function balanceOf(address owner) view returns (uint balance)"],
         provider,
       );
       const routerContract = new ethers.Contract(
-        router_address,
+        ROUTER_ADDRESS,
         [
           "function quoteRemoveLiquidity(address tokenA, address tokenB, bool stable, uint liquidity) external view returns (uint amountA, uint amountB)",
         ],
         provider,
       );
 
-      const lpBalanceMsigInGauge = await gaugeContract.balanceOf("0xBbE6d178d6E11189B46ff4A9f034AB198C2E8A0f");
-      const lpBalanceMsigInWallet = await pairContract.balanceOf("0xBbE6d178d6E11189B46ff4A9f034AB198C2E8A0f");
+      const lpBalanceMsigInGauge = await gaugeContract.balanceOf(MSIG_ADDRESS);
+      const lpBalanceMsigInWallet = await pairContract.balanceOf(MSIG_ADDRESS);
 
       const lpBalanceMsig = lpBalanceMsigInGauge.add(lpBalanceMsigInWallet);
 
-      const amountsOut = await routerContract.quoteRemoveLiquidity(
-        "0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb",
-        "0x4200000000000000000000000000000000000006",
-        false,
-        lpBalanceMsig,
-      );
+      const amountsOut = await routerContract.quoteRemoveLiquidity(DAI_ADDRESS, WETH_ADDRESS, false, lpBalanceMsig);
 
-      const wethPrice = await getDexScreenerPrice("0x4200000000000000000000000000000000000006", "WETH");
       const lpValue =
         +ethers.utils.formatUnits(amountsOut[0], 18) + +ethers.utils.formatUnits(amountsOut[1], 18) * wethPrice;
 
@@ -360,7 +346,7 @@ export function usePolDaiWeth() {
     };
 
     getTreasuryBalance();
-  }, [provider]);
+  }, [provider, wethPrice]);
 
   return treasuryBalance;
 }
@@ -370,17 +356,16 @@ export function usePolBvmWeth() {
 
   const { provider } = useWeb3Context();
 
+  const priceOfBvm = useMarketPrice(BVM_ADDRESS, "BVM");
+  const priceOfWeth = useMarketPrice(WETH_ADDRESS, "WETH");
+
   useEffect(() => {
-    if (!provider) return;
+    if (!provider || priceOfBvm === undefined || priceOfWeth === undefined) return;
 
     const getTreasuryBalance = async () => {
       // lp value
-      const bvm_weth_address = "0x53713F956A4DA3F08B55A390B20657eDF9E0897B";
-      const gauge_address = "0x3f5129112754d4fbe7ab228c2d5e312b2bc79a06";
-      const router_address = "0xE11b93B61f6291d35c5a2beA0A9fF169080160cF";
-
       const pairContract = new ethers.Contract(
-        bvm_weth_address,
+        BVM_WETH_ADDRESS,
         [
           "function getAmountOut(uint amountIn, address tokenIn) external view returns (uint)",
           "function balanceOf(address owner) view returns (uint balance)",
@@ -388,32 +373,24 @@ export function usePolBvmWeth() {
         provider,
       );
       const gaugeContract = new ethers.Contract(
-        gauge_address,
+        BVM_WETH_GAUGE_ADDRESS,
         ["function balanceOf(address owner) view returns (uint balance)"],
         provider,
       );
       const routerContract = new ethers.Contract(
-        router_address,
+        ROUTER_ADDRESS,
         [
           "function quoteRemoveLiquidity(address tokenA, address tokenB, bool stable, uint liquidity) external view returns (uint amountA, uint amountB)",
         ],
         provider,
       );
 
-      const lpBalanceMsigInGauge = await gaugeContract.balanceOf("0xBbE6d178d6E11189B46ff4A9f034AB198C2E8A0f");
-      const lpBalanceMsigInWallet = await pairContract.balanceOf("0xBbE6d178d6E11189B46ff4A9f034AB198C2E8A0f");
+      const lpBalanceMsigInGauge = await gaugeContract.balanceOf(MSIG_ADDRESS);
+      const lpBalanceMsigInWallet = await pairContract.balanceOf(MSIG_ADDRESS);
 
       const lpBalanceMsig = lpBalanceMsigInGauge.add(lpBalanceMsigInWallet);
 
-      const amountsOut = await routerContract.quoteRemoveLiquidity(
-        "0xd386a121991e51eab5e3433bf5b1cf4c8884b47a",
-        "0x4200000000000000000000000000000000000006",
-        false,
-        lpBalanceMsig,
-      );
-
-      const priceOfBvm = await getDexScreenerPrice("0xd386a121991e51eab5e3433bf5b1cf4c8884b47a", "BVM");
-      const priceOfWeth = await getDexScreenerPrice("0x4200000000000000000000000000000000000006", "WETH");
+      const amountsOut = await routerContract.quoteRemoveLiquidity(BVM_ADDRESS, WETH_ADDRESS, false, lpBalanceMsig);
 
       const lpValue =
         +ethers.utils.formatUnits(amountsOut[0], 18) * priceOfBvm +
@@ -423,7 +400,7 @@ export function usePolBvmWeth() {
     };
 
     getTreasuryBalance();
-  }, [provider]);
+  }, [priceOfBvm, priceOfWeth, provider]);
 
   return treasuryBalance;
 }
@@ -457,25 +434,23 @@ export function useTotalReserves() {
 export function useStakingTvl() {
   const [stakingTvl, setStakingTvl] = useState<number>();
   const { provider } = useWeb3Context();
-
+  const ftwPrice = useMarketPrice();
   useEffect(() => {
-    if (!provider) return;
-
     async function getTvl() {
+      if (!provider || ftwPrice === undefined) return;
       const stakedAmount = await getStakedAmount(provider);
-      const stableCoinPriceOfFtw = await getDexScreenerPrice("0x3347453ced85bd288d783d85cdec9b01ab90f9d8", "FTW");
-      const tvl = stakedAmount * stableCoinPriceOfFtw;
+      const tvl = stakedAmount * ftwPrice;
       setStakingTvl(tvl);
     }
 
     getTvl();
-  }, [provider]);
+  }, [ftwPrice, provider]);
 
   return stakingTvl;
 }
 
 async function getStakedAmount(provider: ethers.providers.JsonRpcProvider) {
-  const stakingContract = new ethers.Contract("0x6f82d82e6fecb6d0daf08b8ffd9772d596582f4a", stakingAbi, provider);
+  const stakingContract = new ethers.Contract(STAKING_ADDRESS, stakingAbi, provider);
   const staked = await stakingContract.contractBalance();
   return parseFloat(ethers.utils.formatUnits(staked, 9));
 }
