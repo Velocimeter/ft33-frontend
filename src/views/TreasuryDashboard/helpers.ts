@@ -146,6 +146,7 @@ export function useMsigReserves() {
       const wethBalanceMsigFormatted = ethers.utils.formatEther(wethBalanceMsig);
 
       setTreasuryBalance(+daiBalanceMsigFormatted + +wethBalanceMsigFormatted * wethPrice);
+      console.log("wethprice", wethPrice);
     };
 
     getTreasuryBalance();
