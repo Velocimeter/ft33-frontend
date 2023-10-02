@@ -226,6 +226,11 @@ export function usePol() {
     ftwFt33PolMarket: 14560,
     ftwFt33PolReserve: 7280,
   };
+  console.log("dai-ftw", ftwDaiPol);
+  console.log("dai-weth", daiWethPol);
+  console.log("bvm-weth", bvmWethPol);
+  
+  console.log("ftw-ft33", ftwFt33Pol.ftwFt33PolReserve);
 
   useEffect(() => {
     if (ftwDaiPol?.ftwDaiPolMarket === undefined || daiWethPol === undefined || bvmWethPol === undefined) return;
@@ -413,6 +418,7 @@ export function useTotalReserves() {
   const hotWalletReserves = useHotWalletReserves();
   const msigReserves = useMsigReserves();
   const treasuryReserves = useTreasuryReserves();
+
 
   useEffect(() => {
     if (
