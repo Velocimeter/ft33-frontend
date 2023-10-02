@@ -3,6 +3,7 @@ import { ethers } from "ethers";
 import { useEffect, useState } from "react";
 import { getDexScreenerPrice } from "src/helpers";
 import { useWeb3Context } from "src/hooks";
+import { Weather } from "./ftResponse";
 
 export function useMarketPrice() {
   const [marketPrice, setMarketPrice] = useState<number>();
@@ -192,8 +193,13 @@ export function useFtKeysValue() {
     if (!provider) return;
 
     const getTreasuryBalance = async () => {
-      // ft portfolio value (this is tough, no api)
-      const ftPortfolioValue = 166582.3085;
+      const res = await fetch("https://preview.frenfren.pro/api/users/0x1a6c20D8DDAf118F4d96BB074Fa5170b667399cC");
+      const data = (await res.json()) as Weather;
+      const ftPortfolioEth = data.portfolio.value;
+
+      const ethPrice = await getDexScreenerPrice("0x4200000000000000000000000000000000000006", "WETH");
+
+      const ftPortfolioValue = ftPortfolioEth * ethPrice;
 
       setTreasuryBalance(ftPortfolioValue);
     };
