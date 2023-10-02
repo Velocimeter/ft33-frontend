@@ -219,8 +219,8 @@ const NFT3 = styled(NFT)`
 `;
 
 const NftBottom = styled(NFT)`
-  width: 400px;
-  max-width: 400px;
+  width: 500px;
+  max-width: 500px;
   height: 400px;
   max-height: 400px;
 `;
