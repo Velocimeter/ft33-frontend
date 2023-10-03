@@ -13,6 +13,8 @@ const FTW_DAI_ADDRESS = "0x7B809866EAA8137D902f83bF7CbE77B41D0Df70c";
 const FTW_DAI_GAUGE_ADDRESS = "0x108ef56f5146a060c847bb1a7755beb24eec4bd8";
 const BVM_WETH_ADDRESS = "0x53713F956A4DA3F08B55A390B20657eDF9E0897B";
 const BVM_WETH_GAUGE_ADDRESS = "0x3f5129112754d4fbe7ab228c2d5e312b2bc79a06";
+const DAI_WETH_ADDRESS = "0xd511ce52d24656FA76cb080a0647CfeF93BB976e";
+const DAI_WETH_GAUGE_ADDRESS = "0xb5e6163a8d4398f98800b173813c24f342a518c4";
 const MSIG_ADDRESS = "0xBbE6d178d6E11189B46ff4A9f034AB198C2E8A0f";
 const HOT_WALLET_ADDRESS = "0x1a6c20D8DDAf118F4d96BB074Fa5170b667399cC";
 const TRASURY_ADDRESS = "0x68d91Bb4b1760Bc131555D23a438585D937A8e6d";
@@ -221,8 +223,7 @@ export function usePol() {
   const [treasuryBalance, setTreasuryBalance] = useState<{ polMarket: number; polReserve: number }>();
 
   const ftwDaiPol = usePolFtwDai();
-  // const daiWethPol = usePolDaiWeth();
-  const daiWethPol = 67000;
+  const daiWethPol = usePolDaiWeth();
   const bvmWethPol = usePolBvmWeth();
   const ftwFt33Pol = {
     ftwFt33PolMarket: 14560,
@@ -231,7 +232,7 @@ export function usePol() {
   console.log("dai-ftw", ftwDaiPol);
   console.log("dai-weth", daiWethPol);
   console.log("bvm-weth", bvmWethPol);
-  
+
   console.log("ftw-ft33", ftwFt33Pol.ftwFt33PolReserve);
 
   useEffect(() => {
@@ -319,7 +320,7 @@ export function usePolDaiWeth() {
     const getTreasuryBalance = async () => {
       // lp value
       const pairContract = new ethers.Contract(
-        FTW_DAI_ADDRESS,
+        DAI_WETH_ADDRESS,
         [
           "function getAmountOut(uint amountIn, address tokenIn) external view returns (uint)",
           "function balanceOf(address owner) view returns (uint balance)",
@@ -327,7 +328,7 @@ export function usePolDaiWeth() {
         provider,
       );
       const gaugeContract = new ethers.Contract(
-        FTW_DAI_GAUGE_ADDRESS,
+        DAI_WETH_GAUGE_ADDRESS,
         ["function balanceOf(address owner) view returns (uint balance)"],
         provider,
       );
@@ -420,7 +421,6 @@ export function useTotalReserves() {
   const hotWalletReserves = useHotWalletReserves();
   const msigReserves = useMsigReserves();
   const treasuryReserves = useTreasuryReserves();
-
 
   useEffect(() => {
     if (
