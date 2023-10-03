@@ -222,7 +222,7 @@ export function usePol() {
 
   const ftwDaiPol = usePolFtwDai();
   // const daiWethPol = usePolDaiWeth();
-  const daiWethPol = 70000;
+  const daiWethPol = 67000;
   const bvmWethPol = usePolBvmWeth();
   const ftwFt33Pol = {
     ftwFt33PolMarket: 14560,
