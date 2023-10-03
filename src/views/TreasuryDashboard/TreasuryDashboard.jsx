@@ -219,8 +219,8 @@ function TreasuryDashboard() {
                 POL Reserve
               </Typography>
               <Typography variant="h5">
-                {/* {pol !== undefined ? formatEth(pol.polReserve, 2) : <Skeleton type="text" />} */}
-                160000 
+                {pol !== undefined ? formatEth(pol.polReserve, 2) : <Skeleton type="text" />}
+               
               </Typography>
             </Paper>
           </Grid>

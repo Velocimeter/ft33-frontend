@@ -221,7 +221,8 @@ export function usePol() {
   const [treasuryBalance, setTreasuryBalance] = useState<{ polMarket: number; polReserve: number }>();
 
   const ftwDaiPol = usePolFtwDai();
-  const daiWethPol = usePolDaiWeth();
+  // const daiWethPol = usePolDaiWeth();
+  const daiWethPol = 70000;
   const bvmWethPol = usePolBvmWeth();
   const ftwFt33Pol = {
     ftwFt33PolMarket: 14560,
