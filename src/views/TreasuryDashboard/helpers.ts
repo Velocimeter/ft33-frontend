@@ -204,7 +204,7 @@ export function useFtKeysValue() {
     const getTreasuryBalance = async () => {
       const res = await fetch("https://preview.frenfren.pro/api/users/0x1a6c20D8DDAf118F4d96BB074Fa5170b667399cC");
       const data = (await res.json()) as Weather;
-      const ftPortfolioEth = data.portfolio.value;
+      const ftPortfolioEth = data.portfolio.liquidation;
 
       const ftPortfolioValue = ftPortfolioEth * wethPrice;
 
